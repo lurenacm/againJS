@@ -1,6 +1,7 @@
 [你知道的JS😂](./img/JS.png)
 
-![](https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png)
+
+<img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png" width="100px" height="100px">
 
 > __javascript 中常用小 tip__
 * JavaScript 中 只有 5种情况在判断语句中为 false 即：0，NaN，''，null，undefined
@@ -39,5 +40,3 @@
     - [打印结果](./img/三元运算.jpg)
 * switch case 语句中 cace的判断使用的是绝对相等 `===` 操作符来判断。使用场景：三元运算>switch cace> if else
 * 
-
-![](https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png)
