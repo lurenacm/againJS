@@ -35,5 +35,7 @@
     num > 10 ? (num > 11? num ++ : num--) : (num == 12? (num--,num*=10): null)
     ``` 
     - [打印结果](./img/三元运算.jpg)
+    
+    <img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97.jpg" width="500px" height="500px">
 * switch case 语句中 cace的判断使用的是绝对相等 `===` 操作符来判断。使用场景：三元运算>switch cace> if else
 * 
