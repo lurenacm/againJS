@@ -1,4 +1,5 @@
 [你知道的JS😂](./img/JS.png)
+[](https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png)
 > __javascript 中常用小 tip__
 * JavaScript 中 只有 5种情况在判断语句中为 false 即：0，NaN，''，null，undefined
 * 数学运算符有 `+ - * / % ++ -- ` 等。JavaScript 中除了`+`号外，其他运算符遇到数学运算时，都会将非数字类型转化成 Number类型在运算，包括 `++`。`+` 在 JS 中除了数字类型的相加还有字符串的拼接，当遇到字符串时 JS 优先字符拼接而不是数字类型的相加。重要的是弄明白是不是数学运算，是数学运算就是字符串用number转型。[运算示例](./img/数学运算符.jpg)
