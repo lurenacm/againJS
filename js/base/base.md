@@ -1,7 +1,4 @@
-[你知道的JS😂](./img/JS.png)
-
-
-<img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png" width="100px" height="100px">
+<img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png" width="250px" height="250px">
 
 > __javascript 中常用小 tip__
 * JavaScript 中 只有 5种情况在判断语句中为 false 即：0，NaN，''，null，undefined
