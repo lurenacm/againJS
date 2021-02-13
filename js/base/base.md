@@ -1,6 +1,8 @@
 <img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/JS.png" width="500px" height="500px">
+ [你知道的JS](./img/JS.png)
 
-> __javascript 中常用小 tip__
+> Javascript 中的小 tip
+
 * JavaScript 中 只有 5种情况在判断语句中为 false 即：0，NaN，''，null，undefined
 * 数学运算符有 `+ - * / % ++ -- ()` 等。JavaScript 中除了`+`号外，其他运算符遇到数学运算时，都会将非数字类型转化成 Number类型在运算，包括 `++`。`+` 在 JS 中除了数字类型的相加还有字符串的拼接，字符串在加号运算有最高的优先运算，与字符串相加必定是字符串连接运算，当遇到字符串时 JS 优先字符拼接而不是数字类型的相加。重要的是弄明白是不是数学运算，是数学运算就是字符串用number转型。[运算示例](./img/数学运算符.jpg)
     - 特殊情况一：有引用类型和`+`运算。引用类型的`+`运算中，引用类型会先使用`toString()`转化成字符串（其实是先使用`valueOf`，但是valueOf返回的是对象本身），才转换成数字。所以转字符串时就会字符串拼接。比如：`[] + 10 => "10"，[] + [] =>""，10 + {} => "10[object Object]"，({})+ 10 / ({name: 12})+10 => "[object Object]10"`，`()`这里的小括号也是数学运算。
@@ -10,6 +12,22 @@
     - 特殊情况三 `{} + {} `：不同浏览器输出结果可能不同，`{} + {} => "[object Object][object Object]"`，这也是按照valueOf -> toString的顺序，但因为valueOf是对象本身，所以会以toString的返回值才是原始数据类型，也就是`"[object Object]"`字符串`
      > 特别注意: {} + {} 在不同的浏览器有不同结果可能是NaN，因为有部分浏览器会认为这也是两部分代码块，相等于`{}; +{};`所以`+{};`输出就是NaN
 
+* `==`运算符：在进行 `==` 比较时，如果两边的数据类型不一样，则先转换成相同的数据类型，再作比较。
+   - 引用类型作比较，需要看的是引用地址是否一样，一样就相等，否则不相等。
+    ``` js
+        {name: 'LinYY'} == {name: 'LinYY'}  // false
+        [12,13] ==  [12,13]    // false
+
+        var obj = {}
+        var obj1 = obj
+        obj1 == obj // true
+    ```
+   - null 和 undefined 与任何值比较时都不转化成数字。
+   ``` js
+        null == 0  // false
+        null == [] // false
+   ``` 
+   - 一个特殊的例子，null == undefined 是 true。JavaScript的最初版本是这样区分的：null是一个表示"无"的对象，转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。推荐一篇阮老师的文章[undefined和null区别](https://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html)
 * 三元运算符，特殊情况。
     - 只执行true或 false运行，常使用 null，undefined/ void 0左占位符
     ``` js
