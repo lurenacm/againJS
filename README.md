@@ -14,6 +14,9 @@ JS扫盲（再捞一遍JS）
 ### JS 数组
 * [JS数组](https://github.com/lurenacm/againJS/blob/main/js/%E6%95%B0%E7%BB%84/.md)
 
+### JS 字符串
+* [JS数组](https://github.com/lurenacm/againJS/blob/main/js/%E5%AD%97%E7%AC%A6%E4%B8%B2/.md)
+
 ### JS 三座大山系列
 * [原型和原型链](https://github.com/lurenacm/againJS/blob/main/js/JS%E4%B8%89%E5%BA%A7%E5%A4%A7%E5%B1%B1%E7%B3%BB%E5%88%97/1%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/.md)
 
