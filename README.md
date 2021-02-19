@@ -24,4 +24,10 @@
 * [原型和原型链](https://github.com/lurenacm/againJS/blob/main/js/JS%E4%B8%89%E5%BA%A7%E5%A4%A7%E5%B1%B1%E7%B3%BB%E5%88%97/1%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/.md)
 
 ### OOP
-* 
+* s
+
+### DOM
+* [DOM]()
+
+### BOM
+* [BOM]()
