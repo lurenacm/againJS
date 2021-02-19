@@ -1,5 +1,5 @@
 # againJS
-JS扫盲（再捞一遍JS）
+>__JS扫盲（再捞一遍JS）__
 
 ### 类型
   - [基本类型](https://github.com/lurenacm/againJS/blob/main/js/%E7%B1%BB%E5%9E%8B/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.md)
