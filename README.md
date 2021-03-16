@@ -38,3 +38,6 @@
 
 ### BOM
 * [BOM]()
+
+### 面试篇
+* [JS 初篇](https://github.com/lurenacm/againJS/blob/main/js/%E9%9D%A2%E8%AF%95%E7%AF%87/%E5%88%9D%E7%AF%87.md)

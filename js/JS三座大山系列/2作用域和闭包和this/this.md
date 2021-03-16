@@ -4,10 +4,12 @@
 * __执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`。这句话特别的重要，请记住__
 * 匿名自执行函数函数的 `this` 指向 `window`。
 * 全局下执行的函数，`this` 指向 `window`，严格模式下不起作用。
+* 构造函数的 `this` 指向实例本身
+* 
 
 >__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
 
-## 热身题
+## 普通函数 this 的热身题
 #### 热身题 1
 ``` js
 var name = '林一一'
@@ -54,7 +56,34 @@ console.log(fo())    // 林二二
 > 热身二和热身一差不多，`obj.fn()()` 中 `obj.fn()`执行完后有一个函数(这里称为函数 `A`)返回，最后相当于执行函数 `A()`， `A()` 前面没有 `'.'` 点操作符吧，那么这里的 `this` 就指向 `window`，输出就是 `林二二` 了。上面的 `fo()` 函数同理。
 
 
->__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
+>__来看一下这句话：构造函数的 `this` 指向实例本身__
+
+## 构造函数 this 的热身题
+#### 热身题 1
+``` js
+function Fn(){
+    var n = 0
+    this.name = '林一一'
+    this.age = 18
+    this.getName = function(){
+        return this.name
+    }
+}
+
+Fn.prototype.getAge = function(){
+    return this.age
+}
+
+Fn.x = '林二二'
+
+var f = new Fn()
+console.log(f.name)     // 林一一
+console.log(f.getName())     // 林一一
+console.log(f.getAge())        // 18
+console.log(f.n)    // undefined
+console.log(f.x)    // undefined
+```
+> 上面的 `Fn` 经过 `new`后就是一个构造函数，`this` 就指向实例 `f`。所以上面的1，2输出都是`林一一`。`f.getAge()` 是实例 `f` 调用了`getAge` 输出就是 18，问：实例 `f` 中并没有属性 `getAge` 是怎么输出 18的，`f.x` 输出又为什么是 `undefined` ？答：这是原型链的查找机制，属性 `x` 不是在原型 `prototype` 上的就不是实例的属性，可以读一下这篇文章 [面试 | 你不得不懂得 JS 原型和原型链](https://juejin.cn/post/6938590449674223624)；问：为什么`f.n` 输出的是 `undefined`。因为变量 `n` 是构造函数的私有变量和 `new` 创建的实例没有关系。
 
 ## 思考题
 ### 1. 笔试题 this 指向问题
