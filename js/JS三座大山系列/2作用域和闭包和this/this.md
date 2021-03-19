@@ -8,7 +8,7 @@
 
 >__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
 
-## 普通函数 this 的热身题
+### 普通函数 this 的热身题
 #### 热身题 1
 ``` js
 var name = '林一一'
@@ -91,7 +91,7 @@ function getName() {
 }
 ```
 
-## 自执行函数
+### 自执行函数
 #### 热身题
 ``` js
 
@@ -126,8 +126,46 @@ console.log(f.x)    // undefined
 ```
 > 上面的 `Fn` 经过 `new`后就是一个构造函数，`this` 就指向实例 `f`。所以上面的1，2输出都是`林一一`。`f.getAge()` 是实例 `f` 调用了`getAge` 输出就是 18，问：实例 `f` 中并没有属性 `getAge` 是怎么输出 18的，`f.x` 输出又为什么是 `undefined` ？答：这是原型链的查找机制，属性 `x` 不是在原型 `prototype` 上的就不是实例的属性，可以读一下这篇文章 [面试 | 你不得不懂得 JS 原型和原型链](https://juejin.cn/post/6938590449674223624)；问：为什么`f.n` 输出的是 `undefined`。因为变量 `n` 是构造函数的私有变量和 `new` 创建的实例没有关系。
 
+
+## call，apply，bind 改变 this 的指向
+__提示：所有的函数都是基于 `Function` 这个基类来创建的，同样拥有 `Function` 原型上面的方法__
+* `call` 格式 [function].call([this], [param]...)
+> `[function]`.call([this])，执行 `call()` 会将函数 `[function]` 中的 `this` 绑定到第一个参数中，将后面的实参获取到传递给函数`[function]`，同时执行`[function]`。要记住是`call()` 先执行，`[function]`再执行。
+
+``` js
+var name = '林一一'
+var age = 18
+function fn(){
+   return this.name
+}
+
+function p(){
+    return {
+        age: this.age,
+        arg: arguments
+    }
+}
+
+let obj = {
+    name: '二二',
+    fn: fn,
+    age: 18
+}
+
+let o = {
+    name: '三三'
+}
+
+fn()    // '林一一'
+fn.call()   // '林一一'
+fn.call(obj)    // =>obj.fn()   '二二'
+fn.call(o)  //  '三三'
+
+p.call(obj, 12, 23, 45, 67) // {age: 18, arg: Arguments(4)}
+```
+
 ## 思考题
-### 1. 笔试题 this 指向问题
+#### 1. 笔试题 this 指向问题
 ``` js
 var name = '林一一'
 var obj = {
@@ -139,7 +177,6 @@ var obj = {
         var fn = this.show
         fn()
     }
-    
 }
 obj.wait()  //  林一一
 ```
