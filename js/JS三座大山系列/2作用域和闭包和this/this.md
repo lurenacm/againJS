@@ -2,13 +2,13 @@
 
 ## this 的指向
 * __执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`，严格模式下指向 `undefined`。这句话特别的重要，请记住__
-* 匿名自执行函数函数的 `this` 指向 `window`。
+* 函数没有直接调用者 `this` 指向全局对象(浏览器中是window，node中是 global)。如匿名函数等
 * 构造函数的 `this` 指向实例本身。
 * 箭头函数的 `this` 指向外部的作用域。
 
 >__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
 
-### 普通函数 this 的热身题
+### 一、普通函数 this 的热身题
 #### 热身题 1
 ``` js
 var name = '林一一'
@@ -91,13 +91,13 @@ function getName() {
 }
 ```
 
-### 自执行函数
+### 二、函数没有直接调用者，自执行函数
 #### 热身题
 ``` js
 
 ```
 
-## 构造函数 this 的热身题
+### 三、构造函数中的 this 
 __来读一下这句话：构造函数的 `this` 指向实例本身__
 >关于构造函数的 `this` 为什么指向实例是浏览器指定的，详情看 `new` 这个过程发生了什么 [面试 | 你不得不懂得 JS 原型和原型链](https://juejin.cn/post/6938590449674223624#heading-6)
 #### 热身题 1
@@ -126,8 +126,12 @@ console.log(f.x)    // undefined
 ```
 > 上面的 `Fn` 经过 `new`后就是一个构造函数，`this` 就指向实例 `f`。所以上面的1，2输出都是`林一一`。`f.getAge()` 是实例 `f` 调用了`getAge` 输出就是 18，问：实例 `f` 中并没有属性 `getAge` 是怎么输出 18的，`f.x` 输出又为什么是 `undefined` ？答：这是原型链的查找机制，属性 `x` 不是在原型 `prototype` 上的就不是实例的属性，可以读一下这篇文章 [面试 | 你不得不懂得 JS 原型和原型链](https://juejin.cn/post/6938590449674223624)；问：为什么`f.n` 输出的是 `undefined`。因为变量 `n` 是构造函数的私有变量和 `new` 创建的实例没有关系。
 
+### 四、箭头函数
+#### 热身题
 
-## call，apply，bind 改变 this 的指向
+
+
+### 五、call，apply，bind 改变 this 的指向
 __提示：所有的函数都是基于 `Function` 这个基类来创建的，同样拥有 `Function` 原型上面的方法__
 * `call` 格式 [function].call([this], [param]...)
 > `[function]`.call([this])，执行 `call()` 会将函数 `[function]` 中的 `this` 绑定到第一个参数中，将后面的实参获取到传递给函数`[function]`，同时执行`[function]`。要记住是`call()` 先执行，`[function]`再执行。
@@ -157,15 +161,15 @@ let o = {
 }
 
 fn()    // '林一一'
-fn.call()   // '林一一'
 fn.call(obj)    // =>obj.fn()   '二二'
 fn.call(o)  //  '三三'
 
 p.call(obj, 12, 23, 45, 67) // {age: 18, arg: Arguments(4)}
 ```
+> 
 
 ## 思考题
-#### 1. 笔试题 this 指向问题
+### 1. 笔试题 this 指向问题
 ``` js
 var name = '林一一'
 var obj = {
