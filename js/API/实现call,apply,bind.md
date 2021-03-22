@@ -61,21 +61,70 @@ fn1.call.call(fn2)  //  2
 ```
 > `fn1.call(fn2)` 中执行函数 `call()` 将 `fn1` 中的 `this` 绑定到 `fn2`，最后在 `call`中使用 `this` 执行函数`fn1`，输出就是1；`fn1.call.call(fn2)`：等价于`A.call(fn2)`，`A` 就是 `fn1.call`函数。同样将 A 中 `this` 传递给`fn2`，此时A 中 `this` 就是`fn2`。`call` 调用 `this` 执行 `A (fn1.call)`，也就是执行 `fn2` 输出就是2。
 
-### 模拟实现内置的 call() 方法。
-> 思路: 1. `call()` 方法得先执行。2. 获取到 `[function]` 的 `this`，传递给 `call()` 的第一个参数。3. 最后将剩余参数传入到 `[function]` 中。在 `call()` 中执行函数 `[function]`，也就是执行 this。
-``` js
+> 上面的代码引用 `讶羽` 大佬的
 
+## apply 和 call 基本一致
+``` js
+var obj = {
+    name: '林一一',
+    fn: function() {
+        return this.name
+    }
+}
 
 ```
-> 上面的代码引用 `讶羽` 大佬
+> apply 接收的参数是一个数组。
 
-## apply 
+### 模拟实现内置的 call()，apply()方法。
+>__下面是 `讶羽`__
 
+
+### call 和 apply 区别
+> `call` 方法的语法和作用与 `apply` 方法类似，只有一个区别，就是 call() 方法接受的是一个参数列表，而 apply() 方法接受的是一个包含多个参数的数组。
+``` js
+var name = '二二'
+var obj = {
+    name: '林一一'
+}
+
+function fn(){
+    console.log(this.name, ...arguments)
+}
+
+fn.apply(obj, [12, 34, 45, 56]) //fn(12, 23, 45, 56) 林一一   12 34 45 56
+```
+> 要注意的是，剩余的数组参数会以单个参数的形式传递给函数，`fn.apply(obj, [12, 34, 45, 56])  ==> fn(12, 23, 45, 56)`。
 
 ## bind
 
-### call 和 apply 区别
-> `call` 方法的语法和作用与 `apply()` 方法类似，只有一个区别，就是 call() 方法接受的是一个参数列表，而 apply() 方法接受的是一个包含多个参数的数组。
+
+## 思考题
+### 1. 求数组中的最大值和最小值
+>__使用 Math 的 max/min 求最大最小值__
+``` js
+let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
+let max = Math.max(...arr)  // 76
+let min = Math.min(...arr)  // 3
+```
+
+> __使用数组 sort 方法求最大最小值__
+``` js
+let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
+let list = arr.sort(function(a, b) {
+    return b - a
+})
+
+let max = list[0]   // 76
+
+let min = list[list.length - 1] // 3
+```
+>__使用 apply 求数组最大值最小值__
+``` js
+let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
+
+let max = Math.max.apply(null, arr) // 76
+let min = Math.max.apply(null, arr) // 3
+```
 
 
 ## 参考
