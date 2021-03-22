@@ -1,10 +1,13 @@
 > 前言：this 是 JS 中一个特别重要的一个知识点，this 难吗？好像挺简单的。看完下面这一篇文章，还不会的话，你别来找我。手动狗头🐕。
 
+## 思维导图
+[this 思维导图](./img/thissiwei.png)
+
 ## this 的指向
 * __执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`，严格模式下指向 `undefined`。这句话特别的重要，请记住__
 * 函数没有直接调用者 `this` 指向全局对象(浏览器中是window，node中是 global)。如匿名函数等
 * 构造函数的 `this` 指向实例本身。
-* 箭头函数的 `this` 指向外部的作用域。
+* 箭头函数本身没有`this`的，箭头函数的 `this` 指向最近的非箭头函数 `this`，找不到就指向 `window`，严格模式下指向 `undefined`。
 
 >__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
 
@@ -56,8 +59,18 @@ console.log(fo())    // 林二二
 ```
 > 热身3和热身2差不多，`obj.fn()()` 中 `obj.fn()`执行完后有一个函数(这里称为函数 `A`)返回，最后相当于执行函数 `A()`， `A()` 前面没有 `'.'` 点操作符吧，那么这里的 `this` 就指向 `window`，输出就是 `林二二` 了。上面的 `fo()` 函数同理。
 
-#### 热身题 4，有点小坑
-__再来看一下这句话：执行函数前有 `'.'` 点操作符的话，函数体中的 `this` 就指向前面的对象，没有就指向 `window`__
+### 二、函数没有直接调用者
+__函数没有直接调用者 `this` 指向全局对象(浏览器中是window，node中是 global)。如匿名函数等__
+#### 热身题 1
+``` js
+var name = '林一一';
+!(function(){
+   console.log(this.name)   // 林一一
+})()
+```
+> 自执行函数没有直接的调用者输出的 `name = '林一一'`。
+
+#### 热身题 2
 ``` js
 var name = '林一一'
 var obj = {
@@ -72,30 +85,7 @@ setTimeout(obj.callback,1000)
 *   林一一
 */
 ```
-> 
-#### 热身5，还是有点小坑
-``` js
-function Foo() {
-    getName = function (){
-        console.log(1)
-    }
-    return this
-}
-
-Foo.getName = function () {
-    console.log(2)
-}
-
-function getName() {
-    console.log(5)
-}
-```
-
-### 二、函数没有直接调用者，自执行函数
-#### 热身题
-``` js
-
-```
+> 函数 `setTimeout`，`obj.callback(这只是一个引用地址)` 中并没有直接调用者，`this` 就指向 `window`。所以输出的 `name` 就是全局下的 `林一一`。
 
 ### 三、构造函数中的 this 
 __来读一下这句话：构造函数的 `this` 指向实例本身__
@@ -127,15 +117,48 @@ console.log(f.x)    // undefined
 > 上面的 `Fn` 经过 `new`后就是一个构造函数，`this` 就指向实例 `f`。所以上面的1，2输出都是`林一一`。`f.getAge()` 是实例 `f` 调用了`getAge` 输出就是 18，问：实例 `f` 中并没有属性 `getAge` 是怎么输出 18的，`f.x` 输出又为什么是 `undefined` ？答：这是原型链的查找机制，属性 `x` 不是在原型 `prototype` 上的就不是实例的属性，可以读一下这篇文章 [面试 | 你不得不懂得 JS 原型和原型链](https://juejin.cn/post/6938590449674223624)；问：为什么`f.n` 输出的是 `undefined`。因为变量 `n` 是构造函数的私有变量和 `new` 创建的实例没有关系。
 
 ### 四、箭头函数
-#### 热身题
+* __箭头函数本身没有 `this`，箭头函数的`this`继承上下文的，里面的 `this`会指向当前最近的非箭头函数的 `this`，找不到就是 `window` (严格模式是undefined)__
+* __箭头函数的 `this` 始终指向函数定义时的 `this`，而非执行时__
+#### 热身题 1
+``` js
+var name = '林一一'
+var obj = {
+    name: '二二',
+    a: () => {
+        console.log(this.name)
+    }
+}
+obj.a()
 
+/* 输出
+*   '林一一'
+*/
+```
+> 箭头函数的 `this`，找不到非箭头函数的 `this` 就直接指向 `window`。
 
+#### 热身题 2
+``` js
+var name = '林一一'
+var obj = {
+    name: '二二',
+    fn: function() {
+        return () => {
+            console.log(this.name)
+        }
+    }
+}
+obj.fn()()
+
+/* 输出
+*   '二二'
+*/
+```
+> 很明显箭头函数的 `this` 来自函数 `fn`，对象 `obj` 调用了函数 `fn`，所以 `fn` 的 `this` 指向 `obj`，输出结果就是 `二二`。
 
 ### 五、call，apply，bind 改变 this 的指向
 __提示：所有的函数都是基于 `Function` 这个基类来创建的，同样拥有 `Function` 原型上面的方法__
-* `call` 格式 [function].call([this], [param]...)
-> `[function]`.call([this])，执行 `call()` 会将函数 `[function]` 中的 `this` 绑定到第一个参数中，将后面的实参获取到传递给函数`[function]`，同时执行`[function]`。要记住是`call()` 先执行，`[function]`再执行。
-
+* `call`，接受`this`的对象，和一组列表。`apply` 和 `call` 一样，唯一不同的是 `apply` 接受的是一个包含多个参数的数组。`bind` 同样也是改变函数的 `this` 指向，只不过 `bind` 执行后会返回一个新的函数，新函数中参数来源于剩余的参数
+#### 热身题
 ``` js
 var name = '林一一'
 var age = 18
@@ -152,7 +175,6 @@ function p(){
 
 let obj = {
     name: '二二',
-    fn: fn,
     age: 18
 }
 
@@ -161,12 +183,17 @@ let o = {
 }
 
 fn()    // '林一一'
-fn.call(obj)    // =>obj.fn()   '二二'
+fn.call(obj)    // '二二'
 fn.call(o)  //  '三三'
-
 p.call(obj, 12, 23, 45, 67) // {age: 18, arg: Arguments(4)}
+
+fn.apply(obj)    // "二二"
+p.apply(obj, [1, 2, 3, 4, 5])    // {age: 18, arg: Arguments(5)}
+
+fn.bind(obj)()  // "二二"
+p.bind(obj, 12, 23, 34)()   // {age: 18, arg: Arguments(3)}
 ```
-> 
+> 以上就是 `call`,  `apply`, `bind`, 关于 `this` 的内容，这里不介绍三者的写法，如果介绍可以写另一篇文章了。对这三者不熟悉的可以找其他资料看看。
 
 ## 思考题
 ### 1. 笔试题 this 指向问题
