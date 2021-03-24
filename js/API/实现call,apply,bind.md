@@ -97,17 +97,22 @@ fn.apply(obj, [12, 34, 45, 56]) //fn(12, 23, 45, 56) 林一一   12 34 45 56
 
 ## bind
 
+## 思考
+### 1. 模拟实现内置的 bind() 方法。
+
+### 2.  bind() 和 call()、apply() 的区别
+
 
 ## 思考题
 ### 1. 求数组中的最大值和最小值
->__使用 Math 的 max/min 求最大最小值__
+ - >__使用 Math 的 max/min 求最大最小值__
 ``` js
 let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
 let max = Math.max(...arr)  // 76
 let min = Math.min(...arr)  // 3
 ```
 
-> __使用数组 sort 方法求最大最小值__
+ - >__使用数组 sort 方法求最大最小值__
 ``` js
 let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
 let list = arr.sort(function(a, b) {
@@ -118,7 +123,7 @@ let max = list[0]   // 76
 
 let min = list[list.length - 1] // 3
 ```
->__使用 apply 求数组最大值最小值__
+ - >__使用 apply 求数组最大值最小值__
 ``` js
 let arr = [12, 45, 65, 3, 23, 11, 76, 8, 9, 56, 70]
 
