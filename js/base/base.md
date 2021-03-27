@@ -29,7 +29,7 @@
    ``` js
         null == 0  // false
         null == [] // false
-   ``` 
+   ```
    - 一个特殊的例子，`null == undefined` 是 `true`。`JavaScript` 的最初版本是这样区分的：`null` 是一个表示"无"的对象，转为数值时为0；`undefined` 是一个表示"无"的原始值，转为数值时为NaN。推荐一篇阮老师的文章[undefined和null区别](https://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html)
    > - `var a = null`, 在初始化 a 时使用null 来赋值最好，因为 `null` 时空对象指针即空什么都没有，不会占用内存。而 undefined 是占用位置的
 * 三元运算符，特殊情况。
