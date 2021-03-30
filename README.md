@@ -9,7 +9,7 @@
   - [你知道的JS😂](https://github.com/lurenacm/againJS/blob/main/js/base/base.md)
 
 ### js 运行机制
-* [运行机制](https://github.com/lurenacm/againJS/blob/main/js/js%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/.md)
+* [运行机制](https://github.com/lurenacm/againJS/issues/7)
 
 ### JS 数组
 * [JS数组](https://github.com/lurenacm/againJS/blob/main/js/%E6%95%B0%E7%BB%84/.md)

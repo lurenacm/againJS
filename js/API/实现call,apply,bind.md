@@ -183,7 +183,7 @@ Function.prototype.bind2 = function (context) {
     return fBound;
 }
 ```
-> 模拟实现 api，最重要的是思维过程，这是copy不了的。
+> 模拟实现 api，最重要的是思维过程，这是 copy 不了的。
 
 ## 思考题
 ### 1. 求数组中的最大值和最小值
