@@ -23,7 +23,7 @@
 ### JS 三座大山系列
 * [原型和原型链](https://github.com/lurenacm/againJS/issues/1)
  
-* [作用域和闭包](https://github.com/lurenacm/againJS)
+* 作用域和闭包
   - [变量提升](https://github.com/lurenacm/againJS/issues/4)
   - [闭包](https://github.com/lurenacm/againJS/issues/2)
   - [this](https://github.com/lurenacm/againJS/issues/3)

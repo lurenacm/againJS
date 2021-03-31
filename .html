@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <button style="color: thistle;" id="oBox">点击</button>
+    <div class="redB" style="width: 300px;height: 300px;background-color: red;"></div>
+    <div class="redB" style="width: 300px;height: 300px;background-color: yellow;"></div>
+    <div class="redB" style="width: 300px;height: 300px;background-color: green;"></div>
+</body>
+<script>
+    var oBox = document.getElementById("oBox")
+    oBox.onclick = function(even){
+        console.log(even)
+    }
+
+    var input = document.getElementById('input')
+    input.onkeydown = function(event){
+        console.log(event)
+    }
+</script>
+</html>
