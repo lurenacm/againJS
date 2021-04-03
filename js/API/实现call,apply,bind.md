@@ -129,7 +129,7 @@ fn.apply(obj, [12, 34, 45, 56]) //fn(12, 23, 45, 56) 林一一   12 34 45 56
 >引用MDN的话： `bind()` 方法会创建一个新函数。当这个新函数被调用时，`bind()` 的第一个参数将作为它运行时的 `this`，之后的一序列参数将会在传递的实参前传入作为它的参数。
 * 返回一个新函数，这个新函数执行时的 `this` 才指定到 `bind` 的第一个参数
 * `bind` 的剩余参数，传递给新的函数
-* 返回后的新函数是自我调用的
+* 返回后的新函数是自我调用的，且这个新函数还可以传入新的参数。
 ### 小思考
 ###  1. 上面说的这个新函数是啥？
 > 其实这个新函数就是调用 `bind` 的函数，`bind` 调用后会将调用 `bind` 的函数拷贝一份返回。
@@ -159,7 +159,27 @@ f() // "林一一 12,23,45,67,90"
 > 过 `bind` 改变 `this` 作用域会返回一个新的函数，这个函数不会马上执行
 
 ### 2. 模拟实现内置的 bind() 方法。
-__下面的代码来自 [`JavaScript深入之bind的模拟实现`](https://github.com/mqyqingfeng/Blog/issues/12)__
+1. __简化版实现__
+``` js
+Function.prototype.myBind = function myBind(context, ...arg) {
+    var _this = this    // 获取调用 myBind 的函数主体
+    return (...otherArg) => {      // 返回的新函数，是调用 myBind 函数的拷贝
+        _this.call(context, ...arg.concat(...otherArg))          // 利用 apply 原理，改变 this 指向，同时执行返回的新函数。
+    }
+}
+
+var obj = {
+    name: '林一一'
+}
+
+function fn(){
+ console.log(this.name, ...arguments)   
+}
+
+var a = fn.myBind(obj, 12, 23, 34, 56)
+a() // 林一一 12 23 34 56
+```
+2. __更加全面的版本，下面的代码来自 [`JavaScript深入之bind的模拟实现`](https://github.com/mqyqingfeng/Blog/issues/12)__
 ``` js
 Function.prototype.bind2 = function (context) {
 
