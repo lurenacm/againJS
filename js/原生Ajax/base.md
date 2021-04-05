@@ -1,4 +1,4 @@
-## 一、Ajax
+# 一、Ajax
 ### 1. 概念
 >Ajax全称：async javaScript and xml。xml：是一种可以扩展的文本标记语言，可以扩展自定义的语义标签。很早以前 xml 常用于从服务端返回数据结构，现在基本都是使用 json 格式返回数据。
 
@@ -77,15 +77,135 @@ console.log(3)
 ```
 > 如果知道任务队列的概念，不难知道输出的结果，因为事异步请求，所以同步的主任务先输出`3`，最后输出 `2, 4`。如果上面`xhr.option('post', 'api')` 变成 `xhr.option('post', 'api', false)` 后代码就是同步的，任务队列中只有主任务输出的结果变成`2, 4, 3`。
 
-## 封装原生的 Ajax
-### 1. 参考 jQuery
-``` js
+# 二、axios
+> `axios` 是使用 `promise` 封装的 `ajax`。axios 不是一个类是一个方法。
 
+## 1.  axios 属性
+> axios 有 `get, post, put, patch ,delete` 等请求方式，`get，post` 返回的实例都是 `promise`，所以可以使用 `promise` 的方法，下面给出基本的实用方法。
+* `axios.get()`，向服务器发送一个 `get` 请求。
+``` js
+axios.get('apiURL', {
+    param: {
+        id: 1
+    }
+}).then(res=>{
+    console.log(res);
+})
+.catch( error=>{
+    console.log(error)
+}
+```
+> `param` 中的的键值对最终会 `?` 的形式，拼接到请求的链接上，发送到服务器。
+* `axios.post()`示例
+``` js
+axios.post('apiURL',{
+        user: '林一一',
+        age: 18
+}).then( res=>{
+    console.log(res);
+})
+.catch( error=>{
+    console.log(error)
+}
+```
+* `axios.put()`示例
+``` js
+axios.put('apiURL', {
+    name: '林一一',
+})
+```
+* `axios.patch(url[, data[, config]])`示例
+``` js
+axios.patch('apiURL', {
+    id: 13,
+},{
+   timeout: 1000,
+})
+```
+* `axios.delete()`示例
+``` js
+axios.delete('apiURL', {
+    params: {
+        id: 1
+    },
+    timeout: 1000
+})
+```
+## 2. 一次并发的请求 `axios.all([])`
+> `axios.all()` 可以实现多个请求，且请求都完成后才再去做某事。
+``` js
+let requestArr = [axios.get('apiURL/1'), axios.get('apiURL/2'), axios.post('apiURL/3', {id: 3})]
+axios.all(requestArr).then(res => {
+    console.log(res)
+})
+```
+### 思考，`axios.all()` 是怎么实现并发请求的？
+> `axios.all()` 使用的是 `promise.all()` 实现的，来看看 axios 中的源码
+``` js
+axios.all = function all(promises) {
+    return Promise.all(promises);
+};
+```
+## 3. axios 中的配置项。
+> 实用的 [axios配置项](http://www.axios-js.com/zh-cn/docs/index.html#%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC)
+
+
+# 三、fetch
+## 1. 介绍 fetch
+> `fetch`：是`http`的数据请求方式，是 `XMLHttpRequest` 的一种代替方案，没有使用到 `XMLHttpRequest` 这个类。`fetch` 不是 ajax，而是原生的 js。`fetch()`使用 `Promise`，不使用回调函数。`fetch` 是 ES8 中新增的 api，兼容性不是很好，IE 完全不兼容 `fetch` 写法。
+ 
+* fetch 优点
+> `fetch()` 通过数据流（Stream 对象）处理数据，可以分块读取，有利于提高网站性能表现，减少内存占用，对于请求大文件或者网速慢的场景相当有用。`XMLHttpRequest` 对象不支持数据流，所有的数据必须放在缓存里，不支持分块读取，必须等待全部拿到后，再一次性吐出来
+
+
+
+## 2. fetch 的基本使用
+
+
+
+## 思考 fetch 发送 2 次请求的原因
+>fetch 发送 post 请求的时候，总是发送 2 次，第一次状态码是 204，第二次才成功？原因很简单，因为你用 fetch 的 post 请求的时候，导致 fetch 第一次发送了一个 Options请求，询问服务器是否支持修改的请求头，如果服务器支持，则在第二次中发送真正的
+请求
+
+# 四、面试题
+> 封装原生的 Ajax
+### 1.实现一个 Ajax。
+> 将原生的 ajax 封装成 promise
+``` js
+var myNewAjax = function (url) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', url);
+        xhr.send(data);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && readyState == 4) {
+                var json = JSON.parse(xhr.responseText);
+                resolve(json)
+            } else if (xhr.readyState == 4 && xhr.status != 200) {
+                reject('error');
+            }
+        }
+    })
+}
 ```
 
+### fetch VS ajax VS axios 区别
+
+### 140，如何实现 ajax 请求，假如我有多个请求，我需要让这些 ajax 请求按照某种顺序一次执行，有什么办法呢？如何处理 ajax 跨域
+> https://www.nowcoder.com/tutorial/96/7bf81ef089184fdebeec58822b6e93fd
+
+### 141，如何实现一个 ajax 请求？如果我想发出两个有顺序的 ajax 需要怎么做？
+
+### 142，Fetch 和 Ajax 比有什么优缺点？
 
 
+# 五、参考
+[Fetch API 教程](http://www.ruanyifeng.com/blog/2020/12/fetch-tutorial.html)
+[MDN fetch](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch)
 
+[ajax](https://juejin.cn/post/6844904114896240647)
+[Ajax原理一篇就够了](https://github.com/ljianshu/Blog/issues/45)
+[ajax常见面试题](https://juejin.cn/post/6844903573529034759)
 
 
 
