@@ -16,22 +16,26 @@
 4. 发送 ajax 请求，ajax 任务开始执行。`xhr.send([])`
 
 ``` js
+// 1. 创建 XMLHttpRequest 实例
 let xhr = XMLHttpRequest()
-xhr.open('get', 'api')
+// 2. 打开和服务器的连接
+xhr.open('get', 'URL')
+// 3.发送
+xhr.send()
+// 4. 接收变化。
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200){   // readyState: ajax 状态，status：http 请求状态
-        xhr.responseText;   //响应主体
+        console.log(xhr.responseText);   //响应主体
     }
 }
-xhr.send()
 ```
 ### 4. Ajax 状态和 HTTP 状态码
 * Ajax 状态一共有5种，分别是`0, 1, 2, 3, 4`
->- 状态 0：`UNSENT`，刚创建的 `XMLHttpRequest` 实例，还没有发送
->- 状态 1：`OPENED`，已经执行了上面的 `open` 操作。
->- 状态 2：`HEADERS_RECEIVED`，标识已经发送的 ajax 请求。
->- 状态 3：`LOADING`，表示响应的主体内容正在返回
->- 状态 4：`DONE`，表示响应的主体内容已经被客户端接收。
+>- 状态 0：`unsent`，刚创建的 `XMLHttpRequest` 实例，还没有发送。
+>- 状态 1：`opened`，已经执行了上面的 `open` 操作。
+>- 状态 2：`header_received`，标识已经发送的 ajax 请求。
+>- 状态 3：`loading`，表示响应的主体内容正在返回
+>- 状态 4：`done`，表示响应的主体内容已经被客户端接收。
 
 * HTTP 常见的状态码。
 >- `2xx`：表示请求已经被服务器接收，理解，请接受。常见的有，`200`表示ok，表示服务能够返回信息
@@ -46,7 +50,7 @@ xhr.send()
 >4. `responseText`: 响应的具体内容是字符串，一般是 json 字符串
 >5. `responseXML`: 响应的具体内容是文档。
 >6. `status`: http 的状态码。
->7. `statusText`: 属性保存的状态码是 以字符串表示
+>7. `statusText`: 状态码描述
 >8. `withCredentials`：表示是否允许跨域。
 >9. `getAllResponseHeaders`：获取所有响应头信息。
 >10. `xhr.open()`：打开URL请求。
@@ -152,20 +156,64 @@ axios.all = function all(promises) {
 
 # 三、fetch
 ## 1. 介绍 fetch
-> `fetch`：是`http`的数据请求方式，是 `XMLHttpRequest` 的一种代替方案，没有使用到 `XMLHttpRequest` 这个类。`fetch` 不是 ajax，而是原生的 js。`fetch()`使用 `Promise`，不使用回调函数。`fetch` 是 ES8 中新增的 api，兼容性不是很好，IE 完全不兼容 `fetch` 写法。
- 
-* fetch 优点
-> `fetch()` 通过数据流（Stream 对象）处理数据，可以分块读取，有利于提高网站性能表现，减少内存占用，对于请求大文件或者网速慢的场景相当有用。`XMLHttpRequest` 对象不支持数据流，所有的数据必须放在缓存里，不支持分块读取，必须等待全部拿到后，再一次性吐出来
+*  `fetch`：是 `http` 的数据请求方式，是 `XMLHttpRequest` 的一种代替方案，没有使用到 `XMLHttpRequest` 这个类。`fetch` 不是 ajax，而是原生的 js。`fetch()` 使用 `Promise`，不使用回调函数。`fetch` 是 ES8 中新增的 api，兼容性不是很好，IE 完全不兼容 `fetch` 写法。
+* `fetch()` 采用模块化设计，API 分散在 `Response` 对象、`Request` 对象、`Headers` 对象上。
+*  `fetch()` 通过数据流（Stream 对象）处理数据，对于请求大文件或者网速慢的场景相当有用。`XMLHttpRequest` 没有使用数据流，所有的请求都必须完成后才拿到
+*  在默认情况下 `fetch` 不会接受或者发送 `cookies`
 
+## 2. fetch(url, optionObj) 基本使用
+* 接收第一个参数为请求的 `url`，默认的请求方式是 `get`。
+* 第二个是可选参数 `optionObj`，可以控制不同配置的属性，比如 `method：`属性是字符串。` headers`: 一个对象，可以设定 http 的请求头。`body`: `POST` 请求的数据体，属性也是字符串。`credentials` 表示是否可以携带 `cookie`，`includes`表示是否同源都包含 `cookie`。
+* `fetch` 参数没有同步的设定，因为 `fetch` 是基于  `promise` 封装的本身就是异步。
+* `fetch` 虽然使用的是 `promise` 封装的，但是 `catch` 函数不能直接的捕获到错误，需要在第一个 `then` 函数内做些操作。
 
+__一个 get 请求__
+``` js
+const pro = fetch('https://lyypro.gitee.io/blog/')
+pro.then( response => 
+    response.json()
+).then( res =>
+    console.log(res)
+).catch( err => {
+    console.log(err)
+})
+```
+__一个 post 请求__
+``` js
+const URL =  'https://lyypro.gitee.io/blog/'
+const init = {
+    method: 'POST',
+    header: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+    data: 'id=12&name=林一一',
+    credentials: 'include'
+}
+const pro = fetch(URL, init)
+pro.then( response => 
+    response.json()
+).then( res =>
+    console.log(res)
+).catch( err => {
+    console.log(err)
+})
+```
 
-## 2. fetch 的基本使用
+> 上面的请求都可以使用 `await, async` 来修改这里不展示。同时是为 `post` 请求中，`data` 属性只支持字符串，我们可以使用
 
+## 4. fetch 的三个模块
+* `Response` 模块：`fetch` 请求发送后，会得到一个服务器的响应 `response`，这个响应对于着 http 的回应。
+* `Request` 模块：这是用于请求服务器的模块，上面提到的 `data, header, method` 都是 `Request` 模块的属性。
+* `Headers`，这是一个在 `Response.headers`上的属性用于操控响应头的信息。
+> 上面三者的详细属性可以看看 [阮老师的 Fetch API 教程](http://www.ruanyifeng.com/blog/2020/12/fetch-tutorial.html)
 
-
-## 思考 fetch 发送 2 次请求的原因
+## 5.思考 fetch 发送 2 次请求的原因
 >fetch 发送 post 请求的时候，总是发送 2 次，第一次状态码是 204，第二次才成功？原因很简单，因为你用 fetch 的 post 请求的时候，导致 fetch 第一次发送了一个 Options请求，询问服务器是否支持修改的请求头，如果服务器支持，则在第二次中发送真正的
 请求
+
+## 6.思考 fetch  的缺点
+> 1. `fetch` 的 `get/head` 请求不能设置 `body` 属性
+> 2. `fetch` 请求后，服务器返回的状态码无论是多少包括(4xx, 5xx)，`fetch` 都不认为是失败的，也就是使用 `catch` 也不能直接捕捉到错误，需要再第一个 `then` 中做一些处理。
 
 # 四、面试题
 > 封装原生的 Ajax
@@ -207,7 +255,8 @@ var myNewAjax = function (url) {
 [Ajax原理一篇就够了](https://github.com/ljianshu/Blog/issues/45)
 [ajax常见面试题](https://juejin.cn/post/6844903573529034759)
 
-
+# 六、实战篇，自己封装一个 promise 版的 ajax
+[我是怎样使用promise封装ajax成一个简单版的axios的]()
 
 
 
