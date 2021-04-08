@@ -20,6 +20,9 @@
 ### JS 函数
 * [JS函数](https://github.com/lurenacm/againJS/blob/main/js/%E5%87%BD%E6%95%B0/.md)
 
+### Ajax
+[Ajax](https://github.com/lurenacm/againJS/issues/9)
+
 ### JS 三座大山系列
 * [原型和原型链](https://github.com/lurenacm/againJS/issues/1)
  

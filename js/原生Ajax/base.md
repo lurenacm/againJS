@@ -2,6 +2,7 @@
 
 ## 思维导图
 
+![未命名文件.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c9aee627c53f4ec3b837e3bb2cc97431~tplv-k3u1fbpfcp-watermark.image)
 
 # 一、Ajax
 ### 1. 概念
