@@ -14,12 +14,12 @@
 ### 3. 四步创建 Ajax
 1. 创建 `Ajax`实例，`let xhr = new XMLHttpRequest()`，IE6 不兼容这种写法
 2. 打开请求，配置请求前的配置项，共 5个参数，`xhr.open([http method], [url], [async], [userName], [userPass])`
-    > `http methods` 有常用的请求方式有，`post, get, delete, put, head, options, trace, connect`。`async`代表异步，默认是 `true`，`false` 是同步。`[url]`：是想服务器请求的 `api`。`[userName], [userPass]`，代表用户名和密码
+    > `http methods` 有常用的请求方式有，`post, get, delete, put, head, options, trace, connect`。`async`代表异步，默认是 `true` 异步，`false` 是同步。`[url]`：是想服务器请求的 `api`。`[userName], [userPass]`，代表用户名和密码
 
  - __http methods 细分：delete：删除服务器端的某些数据，一般是文件。put：向服务器上存放某些内容，一般是文件，head：只是获取从服务器端返回的请求头信息，不要响应主体的内容。options：一般用于向服务器发送探测性请求，看是否连接成功__
 
-3. 事件监听 `readystatechange`，一般监听 ajax 状态发生改变的事件，这个事件可以获取服务器返回的响应主和请求头。`xhr.onreadystatechange = function (){}`
-4. 发送 ajax 请求，ajax 任务开始执行。`xhr.send([])`
+3. 事件监听 `readystatechange`，一般监听 ajax 状态码发生改变的事件，这个事件可以获取服务器返回的响应主和请求头。`xhr.onreadystatechange = function (){}`，对于`同步`执行的 Ajax 请求代码步骤三要放在`send`的前面。否则没有意义。
+4. 发送 ajax 请求，ajax 任务开始执行。`xhr.send([])`，`XMLHttpRequest.send()` 方法中如果 Ajax 请求是异步的则这个方法发送请求后就会返回，如果Ajax请求是同步的，那么请求必须知道响应后才会返回。
 > 第五步算上的话，就是读取返回的数据 `xhr.responseText` 。
 ``` js
 // 1. 创建 XMLHttpRequest 实例
@@ -38,8 +38,8 @@ xhr.onreadystatechange = () => {
 ### 4. Ajax 状态和 HTTP 状态码
 * Ajax 状态一共有 5 种 `xhr.readyState`，分别是 `0, 1, 2, 3, 4`
 >- 状态 0：`unsent`，刚创建的 `XMLHttpRequest` 实例，还没有发送。
->- 状态 1：`opened`，已经执行了上面的 `open` 操作，正在取得和服务器的连接。
->- 状态 2：`header_received`，标识已经发送的 ajax 请求，即 `xhr.send()`。
+>- 状态 1：（载入）已调用 `send()` 方法，正在发送请求。
+>- 状态 2：（载入完成）`send()` 方法执行完成，已经接收到全部响应内容
 >- 状态 3：`loading`，表示响应的主体内容正在返回。
 >- 状态 4：`done`，表示响应的主体内容已经被客户端接收。
 
@@ -75,7 +75,7 @@ xhr.onreadystatechange = () => {
 1. 来一道思考题，求输出结果
 ``` js
 let xhr = new XMLHttpRequest()
-xhr.option('post', 'api')
+xhr.open('post', 'api')
 xhr.onreadystatechange = () =>{
     if(xhr.readyState == 2){
         console.log(2)
@@ -90,7 +90,19 @@ console.log(3)
 *   3 2 4
 */
 ```
-> 如果知道任务队列的概念，不难知道输出的结果，因为事异步请求，所以同步的主任务先输出`3`，最后输出 `2, 4`。如果上面`xhr.option('post', 'api')` 变成 `xhr.option('post', 'api', false)` 后代码就是同步的，任务队列中只有主任务输出的结果变成`2, 4, 3`。
+> 如果知道任务队列的概念，不难知道输出的结果，因为是异步请求，所以同步的主任务先输出`3`，最后输出 `2, 4`。如果上面`xhr.open('post', 'api')` 变成 `xhr.open('post', 'api', false)` 后代码就是同步的，任务队列中只有主任务输出的结果变成`2, 4, 3`。
+
+2. 再来一道思考题，在同步请求中下面代码输出的是什么
+``` js
+let xhr = new XMLHttpRequest()
+xhr.open('get', 'xxx', false)
+xhr.send()
+
+xhr.onreadystatechange = () => {
+    console.log(xhr.readyState)
+}
+```
+> 上面的结果什么也没有输出，这里涉及到任务队列的知识，`onreadystatechange` 这个事件监听的是 ajax 状态码的变化，上面的同步请求中 `xhr.send()` 已经执行完后 ajax 的状态码由 0 变成了 4 还没有执行到 `onreadystatechange` 这个监听事件，所以没有输出结果。如果将监听事件放在 `xhr.send()` 之前，那么输出的就是 4。
 
 # 二、axios
 > `axios` 是使用 `promise` 封装的 `ajax`。axios 不是一个类是一个方法。
@@ -264,6 +276,8 @@ var myNewAjax = function (url) {
 [get和post的区别](https://www.oschina.net/news/77354/http-get-post-different)
 
 [Fetch API 教程](http://www.ruanyifeng.com/blog/2020/12/fetch-tutorial.html)
+
+[MDN XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
 
 [MDN fetch](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch)
 
