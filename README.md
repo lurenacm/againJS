@@ -31,7 +31,9 @@
   - [闭包](https://github.com/lurenacm/againJS/issues/2)
   - [this](https://github.com/lurenacm/againJS/issues/3)
  
-* [异步](https://github.com/lurenacm/againJS/blob/main/js/JS%E4%B8%89%E5%BA%A7%E5%A4%A7%E5%B1%B1%E7%B3%BB%E5%88%97/3%E5%BC%82%E6%AD%A5/.md)
+* [异步]
+  - [JS 异步编程 Promise](https://github.com/lurenacm/againJS/issues/11)
+  - [JS 事件循环 event loop](https://github.com/lurenacm/againJS/issues/10)
 
 ### OOP
 * [OOP](https://github.com/lurenacm/againJS)
