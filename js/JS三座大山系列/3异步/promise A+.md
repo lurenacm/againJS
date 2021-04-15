@@ -196,6 +196,8 @@ catch(onrejected){
 ```
 
 ### 五、promise.all()
+* 参数是一个数组，且参数中的元素都是 Promise 实例，如果不是就使用 `Promise.resolve()` 先转化成`Promise` 实例
+* 每一个 `Promise` 实例都必须要成功才执行`.then()`，否则执行 `.catch()`。
 ``` js
 
 ```

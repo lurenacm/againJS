@@ -42,34 +42,36 @@ class myPromise {
     }
 
     then(onfulfilled, onrejected) {
-        typeof onfulfilled !== 'function'? onfulfilled = res =>  res : null;
-        typeof onrejected !== 'function'? onrejected = err => {throw new Error(err.massage)} : null
+        typeof onfulfilled !== 'function' ? onfulfilled = res => res : null;
+        typeof onrejected !== 'function' ? onrejected = err => {
+            throw new Error(err.massage)
+        } : null
         // 返回一个新的 Promise 实例
-        return new myPromise((resolve, reject) => { 
+        return new myPromise((resolve, reject) => {
             // 每一个`.then()` 都接受的到 `resolve()/reject()` 的返回值。
             // 且`.then()`中两个回调函数可能报错所以我们再加一层匿名函数，同时捕捉错误。
-            this.fulfilledContainer.push(() => { 
+            this.fulfilledContainer.push(() => {
                 try {
                     let value = onfulfilled(this.statusVal)
                     // 将上一个 `.then()` 中执行成功的结果返回给下一个`.then()`   
                     // resolve()/reject() 需要等then调用完成后执行    
                     // value 是当前的 Promise 实例则直接调用`.then()`
-                    value instanceof myPromise ? value.then(resolve, reject) : resolve(value)   
+                    value instanceof myPromise ? value.then(resolve, reject) : resolve(value)
                 } catch (e) {
                     reject(e)
                 }
 
             })
-            
+
             this.rejectedContainer.push(() => {
-                this.rejectedContainer.push(() => { 
+                this.rejectedContainer.push(() => {
                     try {
                         let value = onrejected(this.statusVal)
-                        value instanceof myPromise ? value.then(resolve, reject) : resolve(value)              
+                        value instanceof myPromise ? value.then(resolve, reject) : resolve(value)
                     } catch (e) {
                         reject(e)
                     }
-    
+
                 })
             })
         })
@@ -77,26 +79,48 @@ class myPromise {
         // this.rejectedContainer.push(onrejected)
     }
 
-    catch(onrejected){
+    catch (onrejected) {
         this.then(null, onrejected)
+    }
+
+    static all(promiseAry = []) {
+        // 循环遍历每一个 Promise 实例，确定执行的结果
+        new myPromise((resolve, reject) => {
+            for (let index = 0; index < promiseAry.length; index++) {
+                // 确保每一个都执行，且执行的顺序和返回值的顺序一致。
+                // count 统计 promise 实例的执行个数，res 存储成功的结果。
+                let count = 0, res = [];
+                promiseAry[index].then(val => {
+                    count ++ ;
+                    res[i] = val;
+                    count === promiseAry.length ? resolve(res) : null
+                }, reject)
+           }
+        })
     }
 }
 
 // module.exports = myPromise
 
-let  p = new myPromise((resolve, reject) => {
-    resolve(10)
-}).then(res => {
-    console.log(res)
-    throw new Error('@')
-    return res + 10
-}, err => {
-    console.log(err)
-    return err + 1
-})
+// let p = new myPromise((resolve, reject) => {
+//     resolve(10)
+// }).then(res => {
+//     console.log(res)
+//     throw new Error('@')
+//     return res + 10
+// }, err => {
+//     console.log(err)
+//     return err + 1
+// })
 
-p.then(res => {
+// p.then(res => {
+//     console.log(res)
+// }, err => {
+//     console.log(err)
+// })
+
+let p1 = Promise.resolve(1)
+let p2 = Promise.resolve(2)
+myPromise.all([p1, p2]).then(res => {
     console.log(res)
-}, err => {
-    console.log(err)
 })
