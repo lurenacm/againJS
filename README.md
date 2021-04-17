@@ -21,6 +21,9 @@
 ### js 运行机制
 * [运行机制](https://github.com/lurenacm/againJS/issues/7)
 
+### JS 类型检测
+* [JS 类型检测原理和模拟实现](https://github.com/lurenacm/againJS/issues/12)
+
 ### Ajax
 * [Ajax](https://github.com/lurenacm/againJS/issues/9)
 
