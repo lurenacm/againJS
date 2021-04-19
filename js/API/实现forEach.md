@@ -1,5 +1,5 @@
 ## forEach(callback, thisArg) 循环
-> `callback` 函数每一轮循环都会执行一次，且还可以接收三个参数`(currentValue, index, array)`，`index, array` 也是可选的，`thisArg`(可选) 是回调函数的 `this` 指向。
+> `callback` 函数每一轮循环都会执行一次，且还可以接收三个参数`(currentValue, index, array)`，`index, array` 也是可选的，`thisArg`(可选) 是回调函数的 `this` 指向。主要用于数组的循环。
 ### 模拟实现 forEach
 ``` js
 Array.prototype.myForEach = function (callback, context) {

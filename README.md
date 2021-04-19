@@ -25,7 +25,7 @@
 * [JS 类型检测原理和模拟实现](https://github.com/lurenacm/againJS/issues/12)
 
 ### Ajax
-* [Ajax](https://github.com/lurenacm/againJS/issues/9)
+* [Ajax,fetch](https://github.com/lurenacm/againJS/issues/9)
 
 ### JS 三座大山系列
 * [原型和原型链](https://github.com/lurenacm/againJS/issues/1)
@@ -36,7 +36,7 @@
   - [this](https://github.com/lurenacm/againJS/issues/3)
  
 * 异步
-  - [JS 异步编程 Promise](https://github.com/lurenacm/againJS/issues/11)
+  - [JS 异步编程 Promise/async/await](https://github.com/lurenacm/againJS/issues/11)
   - [JS 事件循环 event loop](https://github.com/lurenacm/againJS/issues/10)
 
 ### JS 其他

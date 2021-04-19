@@ -30,6 +30,28 @@ const param = {
     [arr]: [10, 23]
 }
 
+function isObj(checkType) {
+    let type = {}.toString.call(checkType).split(' ')[1].split(']')[0].toLowerCase();
+    return type === 'object' ? true : false
+}
 
+function merge(option, param = {}) {
+    let optionType = isObj(option),
+        paramType = isObj(param);
+    if (optionType && !paramType) throw new TypeError(`${param} must an be object`)
+    for (const key in param) {
+        let optionKey = isObj(option[key]),
+            paramKey = isObj(param[key])
+        if (optionKey && paramKey) {
+            option[key] = merge(option[key], param[key])
+            return
+        }
+        option[key] =  param[key]   // person.action
+    }
+    return option
+}
+
+let res = merge(option, param)
+console.log('res', res)
 
 ```
