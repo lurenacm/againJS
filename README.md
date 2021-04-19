@@ -39,6 +39,8 @@
   - [JS 异步编程 Promise](https://github.com/lurenacm/againJS/issues/11)
   - [JS 事件循环 event loop](https://github.com/lurenacm/againJS/issues/10)
 
+### JS 其他
+  - [JS 深克隆和浅克隆](https://github.com/lurenacm/againJS/issues/)
 <!-- ### OOP
 * [OOP](https://github.com/lurenacm/againJS)
 
