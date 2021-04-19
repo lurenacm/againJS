@@ -53,8 +53,9 @@ var singletonB = (function () {
     let data = []
     var a = 1
 
-    function fn() {
-        console.log(a)
+    function fn(val) {
+        data.push(val)
+        console.log(data)
     }
 
     function getData() {
@@ -67,12 +68,35 @@ var singletonB = (function () {
         fn: fn
     }
 })()
+
+singletonB.fn(0)
+singletonB.fn(1)  // [0, 1]
 ```
-> 但是单例模式使用的是同一个堆内存中的内容，存在自己的缺点。
+> 单例模式使用的是同一个堆内存中的内容，存在自己的缺点。每次使用 `singletonB.fn()` 都会向 `data` 都加入内容且原数据还在，某些任务场景下如果我们想拥有互不干扰的容器这样就没办法实现了。下面介绍`Constructor` 构造器模式。
 
 
 ## 二、Constructor 构造器设计模式
+> 插件组件封装，
+``` js
+class moduleCont {
+    constructor() {
+        this.data = []
+    }
 
+    fn(val) {
+        data.push(val)
+        console.log(data)
+    }
+}
+
+let a1 = new moduleCont()
+let a2 = new moduleCont()
+console.log(a1 === a2)
+console.log(a2.fn === a1.fn)
+console.log(a1.fn(10)) // [10]
+console.log(a1.fn(20)) // [20]
+```
+> 这样不同的实例之间就互不干扰了。
 
 
 [设计模式](https://www.cnblogs.com/tugenhua0707/p/5198407.html)
