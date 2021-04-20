@@ -102,3 +102,5 @@ console.log(a1.fn(20)) // [20]
 [设计模式](https://www.cnblogs.com/tugenhua0707/p/5198407.html)
 [2](https://www.cnblogs.com/imwtr/p/9451129.html)
 [](https://refactoringguru.cn/design-patterns)
+[](https://juejin.cn/post/6844903503266054157)
+[](https://juejin.cn/post/6844903607452581896)
