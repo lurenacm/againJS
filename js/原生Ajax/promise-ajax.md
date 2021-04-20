@@ -4,4 +4,5 @@
 * `get/post/head` 都有两个相同的参数，`url,config`，post 还有一个 data 参数对象
 * 
 ``` js
+
 ```

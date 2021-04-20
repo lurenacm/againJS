@@ -156,7 +156,7 @@ axios.patch('apiURL', {
 axios.delete('apiURL', {
     params: {
         id: 1
-    },
+    },s
     timeout: 1000
 })
 ```
@@ -273,6 +273,24 @@ var myNewAjax = function (url) {
 * 设置请求头，在 ajax 发送请求前加上 `anyAjaxObj.setRequestHeader("If-Modified-Since","0")` 或 `anyAjaxObj.setRequestHeader("Cache-Control","no-cache")`。
 * 在 URL 后面加上一个随机数：` "fresh=" + Math.random()`。 或在后面加上时间搓：`"nowtTime=" + new Date().getTime()`。
 * 如果是使用 jQuery，直接这样就可以了 `$.ajaxSetup({cache:false})`。这样页T面的所有 ajax 都会执行这条语句就是不需要保存缓存记录。
+
+### 7.实现 Ajax 并行请求
+* 串行：请求是异步的，并且需要等待上一个执行完成才可以执行下一个请求。
+* 并行：同时发送多个请求，`Http`的请求可以同时发送多个，JS 会一步步处理请求，等到同时发送的请求都成功了，再去做其他事。
+> 应用场景：比如我们需要实现确保用户登陆成功后，再获取用户信息，再提供相应的活动记录等，我们可以使用 `Promise.all()` 实现，如果使用 `Jquery` 可是会导致回调地狱。
+``` js
+let p1 = axios.get('xx1')
+let p2 = axios.get('xx2')
+let p3 = axios.get('xx3')
+
+Promise.all([p1, p2, p3])
+    .then( res => {
+        console.log(res)
+    }).catch( err => {
+        console.log(err)
+    })
+```
+
 
 # 五、参考
 [get和post的区别](https://www.oschina.net/news/77354/http-get-post-different)
