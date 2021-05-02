@@ -107,7 +107,7 @@ xhr.onreadystatechange = () => {
 > 上面的结果什么也没有输出，这里涉及到任务队列的知识，`onreadystatechange` 这个事件监听的是 ajax 状态码的变化，上面的同步请求中 `xhr.send()` 已经执行完后 ajax 的状态码由 0 变成了 4 还没有执行到 `onreadystatechange` 这个监听事件，所以没有输出结果。如果将监听事件放在 `xhr.send()` 之前，那么输出的就是 4。
 
 # 二、axios
-> `axios` 是使用 `promise` 封装的 `ajax`。axios 不是一个类是一个方法。
+> `axios` 是使用 `promise` 基于原生的`XMLHttpRequest`封装的 `ajax`。`axios` 不是一个类是一个方法。
 
 ## 1.  axios 属性
 > axios 有 `get, post, put, patch ,delete` 等请求方式，`get，post` 返回的实例都是 `promise`，所以可以使用 `promise` 的方法，下面给出基本的实用方法。
