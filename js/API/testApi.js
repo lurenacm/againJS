@@ -70,3 +70,20 @@ function deepClone(obj){
 let obj = {name:'lin', a:{s:1}, arr:[1,3,4]}
 deepClone(obj)
 // console.log(deepClone(obj))
+
+let arr1 = [1,2,3,4,1,2,3, 9]
+let arr2 = [1, 4, 3, 5 ,2, 5, 2]
+
+function diff(arr1, arr2) {
+    let res = [...new Set(arr1)].filter(item => {
+        return !new Set(arr2).has(item)
+    })
+    return res
+}
+console.log(diff(arr1, arr2))
+
+
+let m = new Map()
+m.set('name', '1')
+m.set('name', 0)
+console.log(m)
