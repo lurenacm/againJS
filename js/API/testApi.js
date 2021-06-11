@@ -49,14 +49,14 @@
 
 
 // 深拷贝
-function deepClone(obj){
-    if(obj == undefined) return
-    if(obj instanceof Date) return new Date(obj)
-    if(obj instanceof RegExp) return new RegExp(obj)
-    if(typeof obj !== "object") return
+function deepClone(obj) {
+    if (obj == undefined) return
+    if (obj instanceof Date) return new Date(obj)
+    if (obj instanceof RegExp) return new RegExp(obj)
+    if (typeof obj !== "object") return
     let typeObj = new obj.constructor
     console.log('typeObj', typeObj, obj)
-    if(typeObj === "{}" || typeObj === "[]"){
+    if (typeObj === "{}" || typeObj === "[]") {
         console.log('typeObj', typeObj, obj)
 
         for (const key in obj) {
@@ -67,12 +67,18 @@ function deepClone(obj){
     }
     return typeObj
 }
-let obj = {name:'lin', a:{s:1}, arr:[1,3,4]}
+let obj = {
+    name: 'lin',
+    a: {
+        s: 1
+    },
+    arr: [1, 3, 4]
+}
 deepClone(obj)
 // console.log(deepClone(obj))
 
-let arr1 = [1,2,3,4,1,2,3, 9]
-let arr2 = [1, 4, 3, 5 ,2, 5, 2]
+let arr1 = [1, 2, 3, 4, 1, 2, 3, 9]
+let arr2 = [1, 4, 3, 5, 2, 5, 2]
 
 function diff(arr1, arr2) {
     let res = [...new Set(arr1)].filter(item => {
@@ -82,8 +88,47 @@ function diff(arr1, arr2) {
 }
 console.log(diff(arr1, arr2))
 
-
 let m = new Map()
 m.set('name', '1')
 m.set('name', 0)
 console.log(m)
+
+
+function deepClone(obj, cache = new Set()) {
+    // 判断之前是否已经循环过 cloneObj，防止再次缓存
+    if (cache.has(obj)) return obj
+    cache.add(obj)
+    if (obj == undefined) return
+    if (obj instanceof Date) return new Date(obj)
+    if (obj instanceof RegExp) return new RegExp(obj)
+    if (typeof obj !== "object") return obj
+    let cloneObj = new obj.constructor
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], cache);
+        }
+    }
+    return cloneObj
+}
+let obj = {
+    name: 'lin',
+    a: {
+        s: 1
+    },
+    arr: [1, 3, 4],
+}
+obj.c = obj
+console.log(deepClone(obj))
+
+let obj = {name:'林一一', age:18}
+let handel = {
+    has: function(obj, proKey){
+        if(proKey === 'age') return false
+        return proKey in obj
+    }
+}
+
+let proxy = new Proxy(obj, handel)
+
+console.log('name' in proxy)
+console.log('age' in proxy)

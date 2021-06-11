@@ -59,6 +59,12 @@ m.set('name', 0)
 console.log(m)  // Map(1) { 'name' => 0 }
 ```
 
+### weakMap
+> `weakMap` 是弱链接
+* `weakMap` 内部的 key 和 value 之间没有引用关系，`map`存在引用关系
+* `weakMap` 内部的内存可以被销毁，`map` 中的内存不可以被销毁
+
+
 
 
 
