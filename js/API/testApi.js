@@ -132,3 +132,5 @@ let proxy = new Proxy(obj, handel)
 
 console.log('name' in proxy)
 console.log('age' in proxy)
+
+[1].reduce()
