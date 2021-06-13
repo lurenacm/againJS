@@ -1,12 +1,15 @@
-let obj = {name:'林一一', age:18}
-let handel = {
-    has: function(obj, proKey){
-        if(proKey === 'age') return false
-        return proKey in obj
+Array.prototype.reduce = function (callback, initVal) {
+    for (let index = 0; index < this.length; index++) {
+        if (initVal) {
+            callback(pre = initVal, cur = this[index], index, this)
+        } else {
+            callback(pre = this[index], cur = this[index + 1], index, this)
+        }
     }
 }
 
-let proxy = new Proxy(obj, handel)
-
-console.log('name' in proxy)
-console.log('age' in proxy)
+let arr = [1, 2]
+let a = arr.reduce((pre, cur, index, arr) => {
+    console.log(pre, cur, index, arr)
+    return pre + cur
+}, 0)
