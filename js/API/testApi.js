@@ -153,3 +153,17 @@ let a = arr.reduce((pre, cur, index, arr) => {
     // console.log(pre, cur, index, arr)
     return pre + cur
 }, 0)
+
+
+class Person{
+    constructor(name, age) {
+        this.name = name
+        this.age = age
+    }
+    say(){
+        console.log(this)
+    }
+}
+let person = new Person('a', 12)
+let say = person.say
+say()
