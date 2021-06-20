@@ -34,7 +34,7 @@ say()   // undefined
 
 
 
-
+[ES6复习](https://juejin.cn/post/6844903726201700365#heading-0)
 
 
 
