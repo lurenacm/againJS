@@ -1,6 +1,6 @@
 # commonJS 
 ## 概念
-> node 本身是基于 commonJS 开发的，CommonJS的是模块化设计思想同时AMD,CMD，es6 module 都是模块化设计思想。最常用的是现在的 CommonJS 和 es6 Module。
+> node 本身是基于 commonJS 开发的，CommonJS的是模块化设计思想同时 AMD,CMD，es6 module 都是模块化设计思想。最常用的是现在的 CommonJS 和 es6 Module。
 ``` js
 // a.js
 let c = 12;
