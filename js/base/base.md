@@ -66,11 +66,20 @@
     - [打印结果](./img/三元运算.jpg)
     
     <img src="https://github.com/lurenacm/againJS/blob/main/js/base/img/%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97.jpg" width="550px" height="330px">
-* `i++` 和`++i`区别：`i++`是先运算 `i` 再自加1，而不是运算的结果自加1。`++i` 是 `i` 先自加1再运算。
+* `i++` 和`++i` 区别：`i++`是先运算 `i` 再自加1，而不是运算的结果自加1。`++i` 是 `i` 先自加1再运算。**特别需要注意的是：单独一个表达式 ++i，i++ 之间没有区别，注意这个单独的表达式只能是 i++ 或 ++i，连console.log(i++)这样的表达式包裹起来都会导致结果有变**
 ``` js
 var i = 10
 var a = 20 + (i++)
 console.log(a, i)   // 30, 11
+
+let a = 10
+a++ // 10
+
+let b = 10
+++b  // 10
+
+let b = 10
+console.log(++b) // 11
 ```
 > `a + (i++)` 中 `()` 不会起作用，a 先与 ` i ` 相加 `i` 再自加 1。
 * JS 运算符的优先级[JS运算符的优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
