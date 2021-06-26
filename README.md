@@ -48,10 +48,11 @@
   - [JS 中常见的几种跨域](https://github.com/lurenacm/againJS/issues/20)
 ### JS 模拟实现系列
   - [模拟实现 new ](https://github.com/lurenacm/againJS/issues/14)
-  - [面试 |call, apply, bind的模拟实现和经典面试题](https://github.com/lurenacm/againJS/issues/13)
+  - [面试 |call, apply, bind的模拟实现和经典面试题](https://github.com/lurenacm/againJS/issues/13)  
   - [模拟实现 JSONP 跨域](https://github.com/lurenacm/againJS/issues/17)
   - [模拟实现 reduce](https://github.com/lurenacm/againJS/issues/19)
-
+  - [模拟实现 instanceof](https://github.com/lurenacm/againJS/issues/21)
+  - [模拟实现 typeof](https://github.com/lurenacm/againJS/issues/22)
 
 ### 面试篇
 * [JS 初篇](https://github.com/lurenacm/againJS/issues/5)
