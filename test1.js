@@ -125,16 +125,49 @@ class myEventBus {
 // i = 1, res = 1 q = [1,1,2]
 // 
 
-function getF(count) {
-    if (count <= 1) return 1
-    let q = [1, 1]
-    let i = count
-    while (i>0) {
-        let a = q[q.length - 2]
-        let b = q[q.length - 1]
-        q.push(a + b)
-        i--
+// function getF(count) {
+//     if (count <= 1) return 1
+//     let q = [1, 1]
+//     let i = count
+//     while (i>0) {
+//         let a = q[q.length - 2]
+//         let b = q[q.length - 1]
+//         q.push(a + b)
+//         i--
+//     }
+//     return q.indexOf(count) -1
+// }
+// console.log(getF(2))
+
+
+// 冒泡 排序
+
+function bubbleSort(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[i]) {
+                [arr[j], arr[i]] = [arr[i], arr[j]]
+            }
+        }
     }
-    return q.indexOf(count) -1
+    return arr
 }
-console.log(getF(2))
+console.log(bubbleSort(arr))
+// 时间复杂度 O(n)~O(n^2)，O(1) 稳定
+
+// 快速排序，性能比较高，比其他排序性能要高
+
+let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
+function quickSort(arr) {
+    let left = []
+    let right = []
+    let pivot = arr[Math.floor(arr.length / 2)]
+    let pivotIndex = arr.indexOf(pivot)
+    arr.splice((pivotIndex, 1))
+    for (let index = 0; index < arr.length; index++) {
+        pivot <= arr[index] ? left.push(arr[index]) : right.push(arr[index])
+    }
+    console.log('left', left , 'right', right)
+    // return quickSort(left).concat([pivot], quickSort(right));
+}
+console.log(quickSort(arr))
