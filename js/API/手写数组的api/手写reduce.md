@@ -27,20 +27,32 @@ let objSum = [{a:1, count:2}, {a:2, count:3}, {a: 2, count: 3}].reduce((pre, cur
 ```
 
 ### 编写 myReduce() 方法
->思路： 上面提到过，数组的每一项都会使用到`callback`回调函数，这里可以使用 for 循环实现，同时初始值`initVal`是给`callback`的第一个参数 `pre` 赋值，可传可以不传。 
+>思路： 上面提到过，数组的每一项都会使用到 `callback` 回调函数，这里可以使用 for 循环实现，同时初始值 `initVal` 是给 `callback` 的第一个参数 `pre` 赋值，可传可以不传。 
 ``` js
-Array.prototype.myReduce = function (callback, initVal) {
-    for (let index = 0; index < this.length; index++) {
-        if (initVal) {
-            callback(pre = initVal, cur = this[index], index, this)
-        } else {
-            callback(pre = this[index], cur = this[index + 1], index, this)
-        }
+Array.prototype.myReduce = function(callback,initValue){
+    let arr = this
+    for(let i=0;i<arr.length;i++){
+        initValue = callback(initValue,arr[i],i,arr)
     }
+    return initValue
+}
+
+Array.prototype.myReduce = function(fn, initialValue){
+   let _this = this
+   let index = 0
+   // 当没有初始值时定义数组第一项为初始值
+   if(!initialValue) {
+       initialValue = _this[0]
+       index = 1
+   }
+   for(let i=index; i< _this.length; i++){
+       initialValue = fn(initialValue, _this[i])
+   }
+   return initialValue
 }
 
 let arr = [1, 2]
-let a = arr.reduce((pre, cur, index, arr) => {
+let a = arr.myReduce((pre, cur, index, arr) => {
     // console.log(pre, cur, index, arr)
     return pre + cur
 }, 0)

@@ -21,7 +21,7 @@ function union(arr1, arr2){
 }
 union(arr1, arr2)   // [ 1, 2, 3, 4, 5 ]
 ```
-* 并集实现
+* 交集实现
 ``` js
 let arr1 = [1,2,3,4,1,2,3]
 let arr2 = [1, 4, 3, 5 ,2, 5, 2]
@@ -48,9 +48,9 @@ console.log(diff(arr1, arr2))
 ```
 
 ### map 
-> map 和 set 的区别在于 map 具备属性`key`
+> map 和 set 的区别在于 map 具备属性 `key`
 * map 和 set 一样属性不可以重复
-* map 的 key 可以是一个对象`obj`，如果`obj`被删除了，`map` 中 `obj` 的空间还是会存在。
+* map 的 key 可以是一个对象 `obj`，如果 `obj` 被删除了，`map` 中 `obj` 的空间还是会存在。
 * `weakMap` 中key 必须是一个对象类型。
 ``` js
 let m = new Map()

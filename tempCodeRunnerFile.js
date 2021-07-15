@@ -1,22 +1,13 @@
-function deepClone(obj) {
-    if (obj == undefined) return
-    if (obj instanceof Date) return new Date(obj)
-    if (obj instanceof RegExp) return new RegExp(obj)
-    if (typeof obj !== "object") return obj
-    let cloneObj = new obj.constructor
-    for (const key in obj) {
-        if (!cloneObj.hasOwnProperty(key)) {
-            cloneObj[key] = deepClone(obj[key]);
-        }
+function getF(count) {
+    if (count <= 1) return 1
+    let q = [1, 1]
+    let i = count
+    while (i>0) {
+        let a = q[q.length - 2]
+        let b = q[q.length - 1]
+        q.push(a + b)
+        i--
     }
-    return cloneObj
+    return q.indexOf(count) -1
 }
-let obj = {
-    name: 'lin',
-    a: {
-        s: 1
-    },
-    arr: [1, 3, 4]
-}
-console.log(deepClone(obj))
-
+console.log(getF(2))

@@ -1,11 +1,12 @@
 # Proxy 代理
-> ES5 中的definedProperty 用于重定向对象属性的`get/set`方法，ES6 中 Proxy 代理提供了更多的代理方法比如 `in, delete` 等
+> ES5 中的 definedProperty 用于重定向对象属性的`get/set`方法，ES6 中 Proxy 代理提供了更多的代理方法比如 `in, delete` 等
+
 
 ## new Proxy(targe, handel)
 [MDN Proxy 详解](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
-> targe 和 handel 都是对象，targe 是拦截的目标对象也就是 `Proxy` 要代理的对象/数组，也可以是一个函数，handel 是处理拦截目标对象之定的方案。
-* proxy 中的拦截方式有 13 种
-* Proxy 中的 get/set 方法和 `definedProperty` 类似，都是对取值和设置值的拦截。
+> targe 和 handel 都是对象，targe 是拦截的目标对象也就是 `Proxy` 要代理的对象/数组，也可以是一个函数，handel 是处理拦截目标对象制定的方案。
+* proxy 中的拦截方式有 13 种。
+* Proxy 中的 get/set 方法和 `Object.definedProperty` 类似，都是对取值和设置值的拦截。
 ``` js
 let obj = {}
 let proxy = new Proxy(obj, {
@@ -14,7 +15,6 @@ let proxy = new Proxy(obj, {
     }
     set: function(obj, prop, value){
         obj[prop] = value
-        
     }
 })
 proxy[name] = '林一一'
@@ -36,7 +36,7 @@ let proxy = new Proxy(obj, handel)
 console.log('name' in proxy)
 console.log('age' in proxy)
 ```
-> 上面的 has 将`age`属性隐藏了
+> 上面的 has 将 `age` 属性隐藏了
 * Proxy中 `apply(targe, thisArg, args)` 的拦截函数的调用，所以 `Proxy` 中的 `targe` 代理的是一个函数，`thisArg` 是被调用的上下文对象，`args` 是实参的集合
 ``` js
 function sum(a, b){

@@ -9,7 +9,7 @@ let age = new Age()
 ```
 > 构造函数中使用 `this` 会被写入到实例上面。
 * class 中创建的类不能被给当作是函数调用
-* 在类中没有使用`static`定义的方法属于共有的方法比如`say()`
+* 在类中没有使用 `static` 定义的方法属于共有的方法比如`say()`
 ``` js
 class Person{
     constructor(name, age) {

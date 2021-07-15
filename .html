@@ -5,12 +5,39 @@
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+.container{
+    /* display: flex; */
+    background-color: black;
+    width: 500px;
+    height: 100px;
+}
+.boxLeft{
+    /* float: left; */
+    /* position: absolute; */
+    height: 100px;
+    width: 100px;
+    background-color:red;
+}
+.cal{
+    /* display: float; */
+    float:right;
+    /* margin-left: 100px; */
+    height: 100px;
+    /* flex:1; */
+    background-color: aqua;
+}
+</style>
 <body>
-    <input type="text" id="input">
+    <div class="container">
+        <div class="boxLeft"></div>
+        <div class="cal">cal</div>
+    </div>
+    <!-- <input type="text" id="input">
     <button style="color: thistle;" id="oBox">点击</button>
     <div class="redB" style="width: 300px;height: 300px;background-color: red;"></div>
     <div class="redB" style="width: 300px;height: 300px;background-color: yellow;"></div>
-    <div class="redB" style="width: 300px;height: 300px;background-color: green;"></div>
+    <div class="redB" style="width: 300px;height: 300px;background-color: green;"></div> -->
 </body>
 <script>
     var oBox = document.getElementById("oBox")
