@@ -1,13 +1,14 @@
-let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
+let arr = [6, 3, 1, 9, 5, 8, 13, 76, 23, 45, 21, 7]
 
-function selectionSort(arr) {
-    let newArr = []
-    let len = arr.length
-    for (let i = 0; i < len; i++) {
-        let min = Math.min(...arr)
-        newArr.push(min)
-        arr.splice(arr.indexOf(min), 1)
+function insertSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        while(arr[i] < arr[i-1]){
+            [arr[i], arr[i-1]] = [arr[i-1], arr[i]]
+            i--
+        }
     }
-    console.log(newArr)
+    return arr
 }
-selectionSort(arr)
+
+console.log(insertSort(arr)) 
+//[1, 3, 5, 6, 7, 8, 9, 13, 21, 23, 45, 76]
