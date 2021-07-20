@@ -46,6 +46,8 @@
   - [JS 中的节流防抖](https://github.com/lurenacm/againJS/issues/16)
   - [刨析 JS 中的三类循环原理和性能](https://github.com/lurenacm/againJS/issues/18)
   - [JS 中常见的几种跨域](https://github.com/lurenacm/againJS/issues/20)
+  - [V8 内存回收机制](https://github.com/lurenacm/againJS/issues/23)
+  - [JS 模块化]()
 ### JS 模拟实现系列
   - [模拟实现 new ](https://github.com/lurenacm/againJS/issues/14)
   - [面试 |call, apply, bind的模拟实现和经典面试题](https://github.com/lurenacm/againJS/issues/13)  

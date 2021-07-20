@@ -1,3 +1,4 @@
+``` js
 function myParserInt(params){
     let s 
     if(typeof params == 'number'){
@@ -14,3 +15,4 @@ console.log(myParserInt("123.99"), typeof myParserInt("123.99"))
 console.log(myParserInt({}))
 console.log(myParserInt([]))
 console.log("2323232", typeof "2323232")
+```
