@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="ul">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+<script>
+    let ul = document.querySelector('ul')
+    ul.addEventListener('click', function(e){
+        console.log(e.target.tagName.toLowerCase())
+        if(e.target.tagName.toLowerCase() === 'li') {
+            let liList = document.querySelectorAll('li')
+            // 类数组需要使用 call 指定调用对象
+            let index = Array.prototype.indexOf.call(liList, e.target)
+            console.log(e.target.innerHTML, index)
+        }
+    })
+</script>
+</html>

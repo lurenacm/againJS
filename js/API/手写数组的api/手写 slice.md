@@ -10,6 +10,7 @@ var b = a.slice(2,2)    // b ==> [34, 100, 200]，a ==> [12, 23, 34, 100, 200, 3
 var c = a.slice(2)      // c ==> [34, 100, 200, 300]
 var d = a.slice()       // d ==> [12, 23, 34, 100, 200, 300]，但是 b!= a，
 ```
+
 ### 手写 slice 
 ``` js
 Array.prototype.mySlice = function(startIndex=0, endIndex){

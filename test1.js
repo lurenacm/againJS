@@ -189,3 +189,25 @@ console.log(myParserInt("123.99"), typeof myParserInt("123.99"))
 console.log(myParserInt({}))
 console.log(myParserInt([]))
 console.log("2323232", typeof "2323232")
+
+
+const p = function(){
+    return new Promise((resolve, reject) =>{
+        const p1 = new Promise((resolve, reject) => {
+            setTimeout(()=>{
+                resolve(1)
+            },0)
+            resolve(2)
+        })
+        p1.then((res) =>{
+            console.log(res)
+        })
+        console.log(3)
+        resolve(4)
+    })
+}
+p().then(res => {
+    console.log(res)
+})
+console.log('end')
+

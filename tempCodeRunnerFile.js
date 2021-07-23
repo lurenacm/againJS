@@ -1,16 +1,11 @@
-function myParserInt(params){
-    let s 
-    if(typeof params == 'number'){
-         s = params.toString()
-        return eval(s.split(".")[0])
-    }else if(typeof params == 'string'){
-        return eval(params.split(".")[0])
+var longestCommonSubsequence = function(text1, text2) {
+    let q = []
+    for (let index = 0; index < text1.length; index++) {
+        text2.includes(text1[index]) ? q.push(text1[index]) : null
     }
-     return NaN
-}
+    console.log(q)
+    return q.length
+};
 
-console.log(myParserInt(123.99))
-console.log(myParserInt("123.99"), typeof myParserInt("123.99"))
-console.log(myParserInt({}))
-console.log(myParserInt([]))
-console.log("2323232", typeof "2323232")
+let res = longestCommonSubsequence('abcdefg', 'abdeg')
+console.log(res)
