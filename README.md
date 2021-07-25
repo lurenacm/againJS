@@ -4,7 +4,7 @@
 <!-- ### 类型
   - [基本类型](https://github.com/lurenacm/againJS/blob/main/js/%E7%B1%BB%E5%9E%8B/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.md)
   - [引用类型](https://github.com/lurenacm/againJS/blob/main/js/%E7%B1%BB%E5%9E%8B/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B.md)
-  
+
 ### base
   - [你知道的JS😂](https://github.com/lurenacm/againJS/blob/main/js/base/base.md)
 
@@ -30,12 +30,12 @@
 
 ### JS 三座大山系列
 * [原型和原型链](https://github.com/lurenacm/againJS/issues/1)
- 
+
 * 作用域和闭包
   - [变量提升](https://github.com/lurenacm/againJS/issues/4)
   - [闭包](https://github.com/lurenacm/againJS/issues/2)
   - [this](https://github.com/lurenacm/againJS/issues/3)
- 
+
 * 异步
   - [JS 异步编程 Promise/async/await](https://github.com/lurenacm/againJS/issues/11)
   - [JS 事件循环 event loop](https://github.com/lurenacm/againJS/issues/10)

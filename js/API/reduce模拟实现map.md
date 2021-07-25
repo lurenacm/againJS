@@ -1,5 +1,4 @@
 
-
 ``` js
 Array.prototype.myMap = function (callback) {
     let array = []
