@@ -13,7 +13,7 @@ function _instanceof(example, classP) {
         }
         proto = Object.getPrototypeOf(proto)
     }
-
+}
 _instanceof([], Array)  //true
 _instanceof('', Array)  // false
 _instanceof('', Object) // true
