@@ -6,4 +6,3 @@ var singleNumber = function(nums) {
 console.log(  singleNumber([1,2,2,1,2,3,1,-123,345,5,4,6]))
 
 
-setTimeout()

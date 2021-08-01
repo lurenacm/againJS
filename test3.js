@@ -88,3 +88,30 @@ function deepClone(obj, cache = new Set()) {
 }
 
 deepClone(obj)
+
+
+let arr = [1,2,3,2,1,4,3,1,45]
+let res = arr.map(item => {
+    return item 
+})
+
+function myMap(callback){
+
+}
+
+
+
+let userList = [
+    {name:'jack', age: 19},
+    {name:'yuh', age: 20},
+    {name:'lmi', age: 20},
+]
+
+// 输出
+let userList1 = [
+    {name:'jack', age: 19, index:0},
+    {name:'yuh', age: 20,  index:1},
+    {name:'lmi', age: 20,  index:2},
+]
+
+userList.map()
