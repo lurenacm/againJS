@@ -90,28 +90,215 @@ function deepClone(obj, cache = new Set()) {
 deepClone(obj)
 
 
-let arr = [1,2,3,2,1,4,3,1,45]
+let arr = [1, 2, 3, 2, 1, 4, 3, 1, 45]
 let res = arr.map(item => {
-    return item 
+    return item
 })
 
-function myMap(callback){
+function myMap(callback) {
 
 }
 
 
 
-let userList = [
-    {name:'jack', age: 19},
-    {name:'yuh', age: 20},
-    {name:'lmi', age: 20},
+let userList = [{
+        name: 'jack',
+        age: 19
+    },
+    {
+        name: 'yuh',
+        age: 20
+    },
+    {
+        name: 'lmi',
+        age: 20
+    },
 ]
 
 // 输出
-let userList1 = [
-    {name:'jack', age: 19, index:0},
-    {name:'yuh', age: 20,  index:1},
-    {name:'lmi', age: 20,  index:2},
+let userList1 = [{
+        name: 'jack',
+        age: 19,
+        index: 0
+    },
+    {
+        name: 'yuh',
+        age: 20,
+        index: 1
+    },
+    {
+        name: 'lmi',
+        age: 20,
+        index: 2
+    },
 ]
 
 userList.map()
+
+
+while (str = readline()) {
+    let arr = str.split(" ").map(item => {
+        return parseInt(item)
+    })
+
+    // 结束运行
+    break
+}
+
+let str = '5 1 2 3 4 5'
+let arr = str.split(" ").map(item => {
+    return parseInt(item)
+})
+// console.log(arr)
+if (arr[0] !== 0) {
+    let sum = 0
+    for (let i = 1; i <= arr[0]; i++) {
+        console.log(arr[i])
+        sum = sum + arr[i]
+    }
+    console.log(sum)
+}
+
+
+
+
+
+
+
+
+let data = [{
+        id: 3,
+        val: '3',
+        parentId: 1
+    },
+    {
+        id: 2,
+        val: '2',
+        parentId: 0
+    },
+    {
+        id: 5,
+        val: '5',
+        parentId: 2
+    },
+    {
+        id: 6,
+        val: '6',
+        parentId: 2
+    },
+    {
+        id: 4,
+        val: '4',
+        parentId: 1
+    },
+    {
+        id: 1,
+        val: '1',
+        parentId: 0
+    },
+]
+
+function treeish(arr, parent) {
+    if (!parent) {
+        parent = {
+            id: 0,
+            val: '0'
+        };
+    }
+
+
+
+    let children =arr.filter(obj =>
+        obj.parentId ===parent.id
+        );
+
+    children =convert(children)
+
+    parent.
+    children =
+        children;
+
+
+
+
+    if (
+        children.length !==
+        0) {
+
+
+
+
+        children.
+        forEach(
+            child =>
+            treeish(
+                arr,
+                child));
+
+
+
+
+    }
+
+
+
+
+    return
+    parent;
+
+
+
+
+}
+
+
+
+
+function
+convert(
+    children) {
+
+
+
+
+    return
+    children.
+    map(
+        child => {
+
+
+
+
+            delete
+            child.
+            parentId;
+
+
+
+
+            child.
+            children = [];
+
+
+
+
+            return
+            child;
+
+
+
+
+        });
+
+
+
+
+}
+
+
+
+
+console.
+info(
+    treeish(
+        data));
