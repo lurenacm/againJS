@@ -217,9 +217,9 @@ class EventEmitter {
 
 // event.emit("click", 1, 2);
 
-// event.once("dbClick", () => {
-//   console.log(123456);
-// });
+event.once("dbClick", () => {
+  console.log(123456);
+});
 // event.emit("dbClick");
 // event.emit("dbClick");
 

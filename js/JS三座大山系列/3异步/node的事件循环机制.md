@@ -20,3 +20,21 @@
    └───────────────────────┘
 ```
 > 外部事件传入-> poll 事件轮询 -> 检查阶段 check -> close callbacks 关闭事件回调阶段->定时器检查阶段，
+
+
+
+### 三大重点阶段
+* timers 阶段执行的是 setTimeout 和 setInterval 的回调函数，并且由 poll 阶段控制。
+* poll 是一个很重要的阶段
+[poll阶段](./img/poll阶段.jpg)
+1. 查看有没有定时器，如果有定时器且已经到达执行时间了，那么会执行，eventLoop 将回到 timers 阶段
+2. 没有定时器，会去看 poll 的事件循环队列。如果 poll 队列不为空，那么会遍历对调队列并执行，直到队列为空。
+3. 如果 poll 队列为空。那么会去看有没有 setImmediate 函数需要执行。如果有 setImmediate 需要执行那么 poll 阶段会停止会进入到 check 阶段执行 setImmediate 。如果没有 setImmediate() poll 阶段会等待一段时间，等回调加入道队列中并立即执行。
+4. 过了等待的时间限制后，会自动进入到 check 阶段。
+
+
+
+
+## 参考
+[面试题：说说事件循环机制(满分答案来了)](https://juejin.cn/post/6844904079353708557#heading-5)
+

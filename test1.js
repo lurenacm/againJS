@@ -47,9 +47,8 @@ console.log(res)
 
 function debounce(callback, timeout) {
     let timer = null
-    let context = this
-    let res = null
     return function (...arg) {
+        let context = this
         clearTimeout(timer)
         timer = setTimeout(() => {
             callback.call(context, ...arg)
@@ -57,6 +56,22 @@ function debounce(callback, timeout) {
     }
 }
 box.onclick = debounce(callback, timeout)
+
+
+function debounce(callback, timeout) {
+    let timer = null
+    return function (...arg) {
+        if (timer) {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+            callback.call()
+        }, timeout)
+    }
+}
+
+
+
 
 function throttle(callback, timeout) {
     var timer
@@ -71,7 +86,6 @@ function throttle(callback, timeout) {
     }
 }
 box.onmousemove = throttle(callback, timeout)
-
 
 
 
@@ -158,6 +172,7 @@ console.log(bubbleSort(arr))
 // 快速排序，性能比较高，比其他排序性能要高
 
 let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
+
 function quickSort(arr) {
     let left = []
     let right = []
@@ -167,21 +182,21 @@ function quickSort(arr) {
     for (let index = 0; index < arr.length; index++) {
         pivot <= arr[index] ? left.push(arr[index]) : right.push(arr[index])
     }
-    console.log('left', left , 'right', right)
+    console.log('left', left, 'right', right)
     // return quickSort(left).concat([pivot], quickSort(right));
 }
 console.log(quickSort(arr))
 
 
-function myParserInt(params){
-    let s 
-    if(typeof params == 'number'){
-         s = params.toString()
+function myParserInt(params) {
+    let s
+    if (typeof params == 'number') {
+        s = params.toString()
         return eval(s.split(".")[0])
-    }else if(typeof params == 'string'){
+    } else if (typeof params == 'string') {
         return eval(params.split(".")[0])
     }
-     return NaN
+    return NaN
 }
 
 console.log(myParserInt(123.99))
@@ -191,15 +206,15 @@ console.log(myParserInt([]))
 console.log("2323232", typeof "2323232")
 
 
-const p = function(){
-    return new Promise((resolve, reject) =>{
+const p = function () {
+    return new Promise((resolve, reject) => {
         const p1 = new Promise((resolve, reject) => {
-            setTimeout(()=>{
+            setTimeout(() => {
                 resolve(1)
-            },0)
+            }, 0)
             resolve(2)
         })
-        p1.then((res) =>{
+        p1.then((res) => {
             console.log(res)
         })
         console.log(3)
@@ -210,4 +225,3 @@ p().then(res => {
     console.log(res)
 })
 console.log('end')
-

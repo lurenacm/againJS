@@ -1,39 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Document</title>
 </head>
 <style>
-.container{
-    /* display: flex; */
-    background-color: black;
-    width: 500px;
-    height: 100px;
-}
-.boxLeft{
-    /* float: left; */
-    /* position: absolute; */
-    height: 100px;
-    width: 100px;
-    background-color:red;
-}
-.cal{
-    /* display: float; */
-    float:right;
-    /* margin-left: 100px; */
-    height: 100px;
-    /* flex:1; */
-    background-color: aqua;
-}
+    .container {
+        display: flex;
+        background-color: black;
+        width: 500px;
+        height: 100px;
+        margin: 100px ;
+
+    }
+
+    .boxLeft {
+        /* float: left; */
+        /* position: absolute; */
+        height: 100px;
+        width: 100px;
+        background-color: red;
+    }
+
+    .cal {
+        flex:1;
+        background-color: red;
+    }
+
+    .cal {
+        flex:2;
+        background-color:chartreuse;
+    }
+
+    .cal2{
+        flex:2;
+        background-color: aqua;
+    }
 </style>
+
 <body>
     <div class="container">
         <div class="boxLeft"></div>
-        <div class="cal">cal</div>
+        <div class="cal">flex:1</div>
+        <div class="boxLeft"></div>
     </div>
-    <input id="uploadFile" type="file" accept="image/*" />
+
+    <div class="container">
+        <div class="boxLeft"></div>
+        <div class="cal2">flex:2</div>
+        <div class="boxLeft"></div>
+    </div>
+    <!-- <input id="uploadFile" type="file" accept="image/*" /> -->
 
     <!-- <input type="text" id="input">
     <button style="color: thistle;" id="oBox">点击</button>
@@ -43,13 +62,14 @@
 </body>
 <script>
     var oBox = document.getElementById("oBox")
-    oBox.onclick = function(even){
+    oBox.onclick = function (even) {
         console.log(even)
     }
 
     var input = document.getElementById('input')
-    input.onkeydown = function(event){
+    input.onkeydown = function (event) {
         console.log(event)
     }
 </script>
+
 </html>
