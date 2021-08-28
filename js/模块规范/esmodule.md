@@ -29,7 +29,7 @@ import {a, b} from 'a.js
 * import 导入可以使用解构赋值，也可以将所有的属性都导入到一个对象中，例如` import * as obj from 'a.js'`
 * import 具备声明功能，也就是说定义的解构赋值的不可以再用 `let/const` 重新声明。
 * import 具备预解析，声明的变量可以提升到文件的顶部
-* import命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载
+* import 命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载
 ``` js
 console.log(str)  // 能直接打印出 str 的值。
 import {str, str1} from 'a.js'

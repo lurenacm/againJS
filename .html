@@ -12,7 +12,7 @@
         background-color: black;
         width: 500px;
         height: 100px;
-        margin: 100px ;
+        margin: 100px;
 
     }
 
@@ -25,23 +25,52 @@
     }
 
     .cal {
-        flex:1;
+        flex: 1;
         background-color: red;
     }
 
     .cal {
-        flex:2;
-        background-color:chartreuse;
+        flex: 2;
+        background-color: chartreuse;
     }
 
-    .cal2{
-        flex:2;
+    .cal2 {
+        flex: 2;
         background-color: aqua;
+    }
+
+    #wrapper {
+        width: 100%;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        background-color: aqua;
+    }
+
+    .header {
+        width: 100%;
+        height: auto;
+        flex-shrink: 0;
+        background-color: chartreuse;
+    }
+
+    .main {
+        width: 100%;
+        flex: 1;
+        /* // flex 1的意思就是 flex-grow 1,这里是缩写 */
+        /* // flex-grow: 1; */
+        overflow-y: auto;
+        background-color: salmon;
     }
 </style>
 
 <body>
-    <div class="container">
+    <div id="wrapper">
+        <div class="header">头部头部头部头部头部</div>
+        <div class="main">剩下的</div>
+    </div>
+
+    <!-- <div class="container">
         <div class="boxLeft"></div>
         <div class="cal">flex:1</div>
         <div class="boxLeft"></div>
@@ -51,7 +80,9 @@
         <div class="boxLeft"></div>
         <div class="cal2">flex:2</div>
         <div class="boxLeft"></div>
-    </div>
+    </div> -->
+
+
     <!-- <input id="uploadFile" type="file" accept="image/*" /> -->
 
     <!-- <input type="text" id="input">
