@@ -1,3 +1,33 @@
+let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
+
+function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    let left = []
+    let right = []
+    let pivot = arr[0]
+    for (let index = 1; index < arr.length; index++) {
+        pivot >= arr[index] ? left.push(arr[index]) : right.push(arr[index])
+    }
+    return [...quickSort(left), pivot, ...quickSort(right)]
+}
+console.log(quickSort(arr))
+// [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
+
+function quickSort(arr) {
+    if (arr.length <= 0) return arr
+    let leftArr = []
+    let rightArr = []
+    let p = arr[0]
+    for (let index = 1; index < arr.length; index++) {
+        arr[index] > p ? rightArr.push(arr[index]) : leftArr.push(arr[index])
+    }
+    return [...quickSort(leftArr), p, ...quickSort(rightArr)]
+}
+
+
+
 // 防抖
 function debounce(fn, timeout) {
     let timer = null
@@ -12,16 +42,16 @@ function debounce(fn, timeout) {
     }
 }
 
-function debounce(callback, timeout) {
+function debounce(fn, timeout) {
     let timer = null
     return function (...arg) {
         clearTimeout(timer)
-        let _this = this
         timer = setTimeout(() => {
-            callback.apply(_this, arg)
+            fn.call(this, ...arg)
         }, timeout)
     }
 }
+
 
 //节流 throttle
 function throttle(fn, timeout) {
@@ -38,13 +68,12 @@ function throttle(fn, timeout) {
     }
 }
 
-function throttle(callback, timeout) {
+function throttle(fun, timeout) {
     let timer = null
     return function (...arg) {
         if (timer) return
-        let _this = this
         timer = setTimeout(() => {
-            callback.apply(_this, arg)
+            fun.apply(this, arg)
             timer = null
         }, timeout)
     }
@@ -79,7 +108,15 @@ function _new(ctor, ...arg) {
     return obj
 }
 
+function _new(ctor, ...arg) {
+    let obj = {}
+    obj.__proto__ = obj.prototype
 
+    let res = ctor.call(obj, ...arg)
+    if (typeof res === 'object' && res != null) return res
+
+    return obj
+}
 
 
 // instanceof
@@ -112,17 +149,17 @@ function _instanceof(obj, cla) {
     }
 }
 
-function _instanceof(obj, cla) {
-    let objPro = Object.getPrototypeOf(obj)
-    let claPro = cla.prototype
-    while (objPro) {
-        if (objPro == claPro) {
+function _instanceOf(obj, pro) {
+    let objPto = Object.getPrototypeOf(obj)
+    let prototype = pro.prototype
+    while (objPto) {
+        if (objPto === prototype) {
             return true
         }
-        if (objPro == null) {
+        if (objPto === null) {
             return false
         }
-        objPro = Object.getPrototypeOf(objPro)
+        objPto = Object.getPrototypeOf(objPto)
     }
 }
 
@@ -160,62 +197,22 @@ let obj = {
 
 function deepClone(obj, cache = new Set()) {
     if (cache.has(obj)) return
-
     cache.add(obj)
 
-    if (typeof obj == null) return obj
-
+    if (obj == undefined) return obj
+    if (obj instanceof RegExp) return new RegExp(obj)
     if (obj instanceof Date) return new Date(obj)
 
-    if (obj instanceof RegExp) return new RegExp(obj)
-
     if (typeof obj !== 'object') return obj
-
     let cloneObj = new obj.constructor
-
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
-            cloneObj[key] = deepClone(bj[key], cache)
+            cloneObj = deepClone(obj[key], cache)
         }
     }
     return cloneObj
 }
 
-
-
-function deepClone(obj, cache = new Set()) {
-    if (cache.has(obj)) return
-    cache.add(obj)
-
-    if (typeof obj == null) return obj
-    if (obj instanceof RegExp) return new RegExp(obj)
-    if (obj instanceof Date) return new Date(obj)
-    if (typeof obj !== 'object') return obj
-    let cloneObj = new obj.constructor
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            cloneObj[key] = deepClone(obj[key], cache)
-        }
-    }
-    return cloneObj
-}
-
-function deepClone(obj, cache = new Set()) {
-    if (cache.has(obj)) return
-    cache.add(obj)
-
-    if (typeof obj == null) return obj
-    if (obj instanceof RegExp) return new RegExp(obj)
-    if (obj instanceof Date) return new Date(obj)
-    if (typeof obj !== 'object') return obj
-    let cloneObj = new obj.constructor
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            cloneObj[key] = deepClone(obj[key], cache)
-        }
-    }
-    return cloneObj
-}
 
 // Function.prototype.myCall = function (context, ...args) {
 //     context = context || window
@@ -254,17 +251,20 @@ Function.prototype.myBind = function myBind(context, ...arg) {
 }
 
 
-Function.prototype.myBind = function (context, ...arg) {
-    context = context || window
-    let _this = this
-    return (...otherArg) => {
-        _this.call(context, ...otherArg.concat(...arg))
+
+Function.prototype.myBind = function myBind(context, ...arg) {
+    var _this = this // 获取调用 myBind 的函数主体
+    function ctor(...otherArg) { // 返回的新函数，是调用 myBind 函数的拷贝
+        // 判断this的来源是不是 new 关键字的  this  instanceof  ctor 是 true，说明有实例返回，
+        // 也就是有使用到 new 关键字。
+        _this.call(this instanceof ctor ? this : context, ...arg.concat(...otherArg)) // 利用 apply 原理，改变 this 指向，同时执行返回的新函数。
     }
+    // 修改返回函数的 prototype 为绑定函数的 prototype，实例就可以继承绑定函数的原型中的值
+    ctor.prototype = this.prototype
+    return ctor
 }
 
 
-
-// 
 Promise.myAll = function (promiseArr) {
     return new Promise((resolve, reject) => {
         let ans = []
@@ -278,6 +278,7 @@ Promise.myAll = function (promiseArr) {
         }
     })
 }
+
 
 Promise.all = function (promiseArr) {
     return new Promise((resole, reject) => {
@@ -312,12 +313,21 @@ class EventEmitter {
     constructor() {
         this.events = {};
     }
+
     // 实现订阅
     on(type, callBack) {
         if (!this.events[type]) {
             this.events[type] = [callBack];
         } else {
             this.events[type].push(callBack);
+        }
+    }
+
+    on(type, callback) {
+        if (!this.events[type]) {
+            this.events[type] = [callback]
+        } else {
+            this.events[type].push(callback)
         }
     }
 
@@ -343,6 +353,7 @@ class EventEmitter {
         this.events[type] &&
             this.events[type].forEach((fn) => fn.apply(this, rest));
     }
+
 }
 
 
@@ -495,8 +506,8 @@ class EventEmitter {
         });
     }
 
-    off(type, callback){
-        if(!this.events[type]) return;
+    off(type, callback) {
+        if (!this.events[type]) return;
         this.events[type] = this.events[type].filter(item => {
             item !== callback
         })
@@ -512,8 +523,8 @@ class EventEmitter {
         this.on(type, fn);
     }
 
-    once(type, callback){
-        function fn(){
+    once(type, callback) {
+        function fn() {
             callback();
             this.off(type, fn)
         }
@@ -526,7 +537,7 @@ class EventEmitter {
             this.events[type].forEach((fn) => fn.apply(this, rest));
     }
 
-    emit(type, ...rest){
+    emit(type, ...rest) {
         this.events[type] && this.events[type].forEach(callback => callback.apply(this, rest))
     }
 }
