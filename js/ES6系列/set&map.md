@@ -19,8 +19,6 @@ console.log(set)
 ```
 
 
-
-
 ### set 基本用法
 * Set 集合不具备.length 属性，但是具备 `.size` 也可以放回集合元素的数量
 * `.has(val)` 判断集合中是否有 val 这个值，有就 true，没有就false
@@ -114,6 +112,7 @@ m.set(obj, '二二')
 console.log(m)
 ```
 
+
 ### Map 与数组的关系
 * Map 构造函数的参数可以传入一个二维的数组，[[key, value], [key, value]]
 ``` js
@@ -123,9 +122,6 @@ let m1 = new Map([['name', '林一一'], ['age', 18]])
 Array.from(m1)
 // [['name', '林一一'], ['age', 18]]
 ```
-
-
-
 
 ### map 的常用方法
 * size 返回字典元素的个数，字典中元素也不可以重复
@@ -143,9 +139,7 @@ map.set('age', 18)
 
 ### map 的遍历方法
 > msp 和对象一样具备通用的遍历方法
-* keys(), values(), forEach()
-
-
+* `keys(), values(), forEach()`
 
 
 * map 和 set 一样属性不可以重复

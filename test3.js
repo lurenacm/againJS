@@ -466,12 +466,16 @@ let userList1 = [{
 
 userList.map()
 
+// 两行输入
+let n = readline()  // readline() 输入的是字符串，可以使用 parseInt() 转换
+let m = readline()  // 
 
+
+// 多行输入处理
 while (str = readline()) {
     let arr = str.split(" ").map(item => {
         return parseInt(item)
     })
-
     // 结束运行
     break
 }

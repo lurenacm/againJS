@@ -362,6 +362,7 @@
 // // return -1
 // // let str = 'google'
 
+
 // // if (str == '') {
 // //   console.log(-1)
 // // }
@@ -538,3 +539,25 @@
 
 // fn('aafjgsfradscfssdgwadageeydsw')
 
+
+
+function fn(n, byte) {
+  let l = 0
+  let r = 1
+  let count = 0
+  while (l < byte.length) {
+    if (byte[l] == 'B' && byte[r] == 'Y') {
+    }
+    if (byte[l] != 'B' && byte[r] == 'Y') {
+      r++
+      l++
+      count++
+    }
+    if (byte[l] == 'Y' && byte[r] == 'Y') {
+      r++
+      l++
+      count++
+    }
+  }
+}
+fn(5, ['B', 'Y', 'Y', 'Y', 'B'])
