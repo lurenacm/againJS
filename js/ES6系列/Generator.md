@@ -1,6 +1,6 @@
 ## Generator 生成器对象
 > Generator 生成器对象由一个 generator 函数返回的。
-* Generator 本身就是基于 iterator 迭代器规范实现的管理异步编程的。
+* Generator 本身就是基于 iterator 迭代器规范实现的管理异步编程的。允许函数在执行过程中暂停和调用时恢复执行。
 ``` js
 function* fn(){
    console.log(1)
@@ -9,6 +9,7 @@ console.log(typeof fn()) // object
 ```
 > `fn()` 函数执行后返回一个 `generator` 对象。但是函数内部的逻辑没有被执行，所以 `console.log(1)` 中 1 没有被打印。
 
+> 小 Tip：生成器并不是新的概念，早在其他语言已近有 `yield` 的关键字了。例如 `C#`
 
 ### 普通函数和 Generator 函数的区别
 ``` js
@@ -39,7 +40,7 @@ console.log(({}).toSing.call(itor)) // "[object Generator]"
 
 ### 生成器函数中 yield 和方法
 #### yield 
-* 每执行一次 `yield` 函数都会暂停一次
+* 每执行一次 `yield` 函数都会暂停一次，生成器函数会使用 `yield` 将生成器对象的 `value` 值返回。
 * `yield` 的执行需要依赖 `.next()` 调用，返回的结果是一个符合迭代器规范的对象，对象内有`value, done`分别表示返回的结果值和遍历是否完成，false 表示未遍历结束，true 表示遍历结束则函数执行结束。
 ``` js
 function* func(){
@@ -107,7 +108,6 @@ console.log(itor.next())   // {value: undefined, done: true}
 
 ## async 和 await
 > async 和 await 就是 Generator 的语法糖
-
-
+*  
 
 

@@ -63,7 +63,7 @@
         background-color: salmon;
     }
 
-    .t{
+    .t {
         width: 50px;
         height: 50px;
         /* border: 1px solid red; */
@@ -72,14 +72,32 @@
         /* border-top-left-radius: 100px;
         border-bottom-left-radius: 100px; */
     }
+
+    .parent {
+        width: 100%;
+        height: 100%;
+        background: red;
+        position: relative;
+    }
+
+.child {
+    background: green;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 </style>
 
 <body>
+    <div class="parent">
+        <div class="child">child</div>
+    </div>
     <!-- <div id="wrapper">
         <div class="header">头部头部头部头部头部</div>
         <div class="main">剩下的</div>
     </div> -->
-    <div class="t"></div>
+    <!-- <div class="t"></div> -->
     <!-- <div class="container">
         <div class="boxLeft"></div>
         <div class="cal">flex:1</div>

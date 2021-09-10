@@ -1,12 +1,8 @@
-function quickSort(arr){
-    if(arr.length === 0) return
-    
-    let p = arr.shift()
-    let leftArr = []
-    let rightArr = []
-    for(let i=1; i<arr.length-1; i++){
-        arr[i] > p ? rightArr.push(arr[i]) : leftArr.push(arr[i])
-    }
-    return [...quickSort(leftArr), p, ...quickSort(rightArr)]
+let data = []
+for (var i = 0; i < 3; i++) {
+    data[i] = (function (j) {
+        return function () {
+            console.log(j);
+        }
+    })(i)
 }
-quickSort(arr)

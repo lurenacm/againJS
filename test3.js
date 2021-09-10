@@ -4,6 +4,7 @@ function quickSort(arr) {
     if (arr.length <= 1) {
         return arr;
     }
+
     let left = []
     let right = []
     let pivot = arr[0]
@@ -15,18 +16,20 @@ function quickSort(arr) {
 console.log(quickSort(arr))
 // [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
 
+
 function quickSort(arr) {
-    if (arr.length <= 0) return arr
+    if (arr.length <= 1) return arr
+
     let leftArr = []
     let rightArr = []
+
     let p = arr[0]
-    for (let index = 1; index < arr.length; index++) {
-        arr[index] > p ? rightArr.push(arr[index]) : leftArr.push(arr[index])
+    for (let i = 0; i < arr.length; i++) {
+        p > arr[i] ? leftArr.push(arr[i]) : rightArr.push(arr[i])
     }
+
     return [...quickSort(leftArr), p, ...quickSort(rightArr)]
 }
-
-
 
 // 防抖
 function debounce(fn, timeout) {
@@ -53,6 +56,7 @@ function debounce(fn, timeout) {
 }
 
 
+
 //节流 throttle
 function throttle(fn, timeout) {
     let timer = null
@@ -68,17 +72,18 @@ function throttle(fn, timeout) {
     }
 }
 
-function throttle(fun, timeout) {
+
+function throttle(fn, timeout) {
     let timer = null
     return function (...arg) {
         if (timer) return
         timer = setTimeout(() => {
-            fun.apply(this, arg)
+            fn.apply(this, arg)
             timer = null
         }, timeout)
     }
-}
 
+}
 
 
 // // new 操作符
@@ -467,8 +472,8 @@ let userList1 = [{
 userList.map()
 
 // 两行输入
-let n = readline()  // readline() 输入的是字符串，可以使用 parseInt() 转换
-let m = readline()  // 
+let n = readline() // readline() 输入的是字符串，可以使用 parseInt() 转换
+let m = readline() // 
 
 
 // 多行输入处理
@@ -578,10 +583,26 @@ class EventEmitter {
         }
     }
 
+    on(type, callBack) {
+        if (!this.events[type]) {
+            this.events[type] = [callBack]
+        } else {
+            this.events[type].push(callback)
+        }
+    }
+
+
     off(type, callback) {
         if (!this.event[type]) return
         this.event[type] = this.event[type].filter(item => {
             return item !== callback
+        })
+    }
+
+    off(type, callBack) {
+        if (!this.events[type]) return
+        this.events[type] = this.events[type].filter(item => {
+            return item !== callBack
         })
     }
 
@@ -593,9 +614,22 @@ class EventEmitter {
         this.on(type, fn)
     }
 
+    once(type, callBack) {
+        function fn(){
+            callBack()
+            this.off(type, fn)
+        }
+        this.on(type, fn)
+    }
+
 
     emit(type, ...arg) {
         this.event[type] && this.event[type].map(callback => callback.call(this, ...arg))
+    }
+
+
+    emit(type, ...arg) {
+        this.events[type] && this.events[type].map(callBack => callBack.apply(this, arg))
     }
 }
 
