@@ -16,19 +16,17 @@ function quickSort(arr) {
 console.log(quickSort(arr))
 // [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
 
-
 function quickSort(arr) {
     if (arr.length <= 1) return arr
-
-    let leftArr = []
-    let rightArr = []
-
     let p = arr[0]
+    let arrLeft = []
+    let arrRight = []
+
     for (let i = 0; i < arr.length; i++) {
-        p > arr[i] ? leftArr.push(arr[i]) : rightArr.push(arr[i])
+        arr[i] < p ? arrLeft.push(arr[i]) : arrRight.push(arr[i])
     }
 
-    return [...quickSort(leftArr), p, ...quickSort(rightArr)]
+    return [...quickSort(arrLeft), p, ...quickSort(arrRight)]
 }
 
 // 防抖
@@ -50,11 +48,10 @@ function debounce(fn, timeout) {
     return function (...arg) {
         clearTimeout(timer)
         timer = setTimeout(() => {
-            fn.call(this, ...arg)
+            fn.apply(this, arg)
         }, timeout)
     }
 }
-
 
 
 //节流 throttle
@@ -80,11 +77,24 @@ function throttle(fn, timeout) {
         timer = setTimeout(() => {
             fn.apply(this, arg)
             timer = null
-        }, timeout)
+        })
     }
-
 }
 
+
+
+// 洗牌算法
+Array.prototype.shuffle = function() {
+    var input = this;
+    for (var i = input.length-1; i >=0; i--) {
+        var randomIndex = Math.floor(Math.random()*(i+1));
+        var itemAtIndex = input[randomIndex];
+        input[randomIndex] = input[i];
+        input[i] = itemAtIndex;
+    }
+    return input;
+}
+console.log([1,2,3,4,5,6,7,8].shuffle())
 
 // // new 操作符
 // function _new(ctor, ...params) {
@@ -103,26 +113,14 @@ function throttle(fn, timeout) {
 
 function _new(ctor, ...arg) {
     let obj = {}
-
     obj.__proto__ = ctor.prototype
 
     let res = ctor.call(obj, ...arg)
 
-    if (typeof res == 'object' && res !== null) return res
-
-    return obj
-}
-
-function _new(ctor, ...arg) {
-    let obj = {}
-    obj.__proto__ = obj.prototype
-
-    let res = ctor.call(obj, ...arg)
     if (typeof res === 'object' && res != null) return res
 
     return obj
 }
-
 
 // instanceof
 // function _instanceOf(obj, Pro) {
@@ -140,33 +138,31 @@ function _new(ctor, ...arg) {
 // }
 // console.log(_instanceOf())
 
-function _instanceof(obj, cla) {
-    let pro = Object.getPrototypeOf(obj);
-    let claProto = cla.prototype
-    while (pro) {
-        if (pro == claProto) {
-            return true
+// 柯里化函数实现
+function curry(fn, len = fn.length){
+    return _curry.call(this, fn, len)
+}
+
+function _curry(fn, len, ...args) {
+    return function (...params) {
+        let _args = [...args, ...params];
+        if (_args.length >= len) {
+            return fn.apply(this, _args);
+        } else {
+            return _curry.call(this, fn, len, ..._args)
         }
-        if (pro == null) {
-            return false
-        }
-        pro = Object.getPrototypeOf(pro)
     }
 }
 
-function _instanceOf(obj, pro) {
-    let objPto = Object.getPrototypeOf(obj)
-    let prototype = pro.prototype
-    while (objPto) {
-        if (objPto === prototype) {
-            return true
-        }
-        if (objPto === null) {
-            return false
-        }
-        objPto = Object.getPrototypeOf(objPto)
-    }
-}
+let _fn = curry(function(a,b,c,d,e) {
+    console.log(a + b + c + d + e)
+})
+
+_fn(1, 2, 3, 4, 5); // print: 1,2,3,4,5
+_fn(1)(2)(3, 4, 5); // print: 1,2,3,4,5
+_fn(1, 2)(3, 4)(5); // print: 1,2,3,4,5
+_fn(1)(2)(3)(4)(5); // print: 1,2,3,4,5
+
 
 
 // 深拷贝
@@ -200,21 +196,24 @@ let obj = {
 
 // deepClone(obj)
 
+
 function deepClone(obj, cache = new Set()) {
-    if (cache.has(obj)) return
+    if (cache.has(obj)) return obj
     cache.add(obj)
 
-    if (obj == undefined) return obj
+    if (obj == null) return obj
     if (obj instanceof RegExp) return new RegExp(obj)
     if (obj instanceof Date) return new Date(obj)
 
-    if (typeof obj !== 'object') return obj
+    if (typeof obj != 'object') return obj
     let cloneObj = new obj.constructor
+
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             cloneObj = deepClone(obj[key], cache)
         }
     }
+
     return cloneObj
 }
 
@@ -237,6 +236,13 @@ Function.prototype.myCall = function (context, ...arg) {
     return
 }
 
+Function.prototype.myCall = function (context, ...arg) {
+    context = context || window
+    context.fn = this
+    context.fn(...arg)
+    delete context.fn
+    return
+}
 
 
 Function.prototype.myApply = function (context, args) {
@@ -256,7 +262,6 @@ Function.prototype.myBind = function myBind(context, ...arg) {
 }
 
 
-
 Function.prototype.myBind = function myBind(context, ...arg) {
     var _this = this // 获取调用 myBind 的函数主体
     function ctor(...otherArg) { // 返回的新函数，是调用 myBind 函数的拷贝
@@ -270,6 +275,31 @@ Function.prototype.myBind = function myBind(context, ...arg) {
 }
 
 
+// 串行
+async function runPromiseByQueue(myPromises) {
+    for (let value of myPromises) {
+        await value();
+    }
+}
+
+const createPromise = (time, id) => {
+    return () => {
+        new Promise(solve => {
+            setTimeout(() => {
+                console.log("promise", id);
+                solve();
+            }, time)
+        });
+    }
+}
+runPromiseByQueue([
+    createPromise(3000, 1),
+    createPromise(2000, 2),
+    createPromise(1000, 3)
+]);
+
+
+// 并行
 Promise.myAll = function (promiseArr) {
     return new Promise((resolve, reject) => {
         let ans = []
@@ -300,7 +330,6 @@ Promise.all = function (promiseArr) {
 }
 
 
-
 Promise.race = function (promiseArr) {
     return new Promise((resolve, reject) => {
         promiseArr.forEach(p => {
@@ -313,92 +342,10 @@ Promise.race = function (promiseArr) {
     })
 }
 
-
-class EventEmitter {
-    constructor() {
-        this.events = {};
-    }
-
-    // 实现订阅
-    on(type, callBack) {
-        if (!this.events[type]) {
-            this.events[type] = [callBack];
-        } else {
-            this.events[type].push(callBack);
-        }
-    }
-
-    on(type, callback) {
-        if (!this.events[type]) {
-            this.events[type] = [callback]
-        } else {
-            this.events[type].push(callback)
-        }
-    }
-
-    // 删除订阅
-    off(type, callBack) {
-        if (!this.events[type]) return;
-        this.events[type] = this.events[type].filter((item) => {
-            return item !== callBack;
-        });
-    }
-
-    // 只执行一次订阅事件
-    once(type, callBack) {
-        function fn() {
-            callBack();
-            this.off(type, fn);
-        }
-        this.on(type, fn);
-    }
-
-    // 触发事件
-    emit(type, ...rest) {
-        this.events[type] &&
-            this.events[type].forEach((fn) => fn.apply(this, rest));
-    }
-
-}
-
-
-class EventEmitter {
-    constructor() {
-        this.event = {}
-    }
-
-    on(callback, type) {
-        if (!this.event[type]) {
-            this.event[type] = [callback]
-        } else {
-            this.event[type].push(callback)
-        }
-    }
-
-    off(type, callBack) {
-        if (!this.event[type]) return
-        this.event[type] = this.event[type].filter(item => {
-            item !== callBack
-        })
-    }
-
-    once(type, callBack) {
-
-    }
-
-    emit(type, ...arg) {
-        this.event[type] && this.event[type].map(callBack => {
-            callBack.call(this, ...arg)
-        })
-    }
-}
-
-
 // axios
 axios.get('url', {
     param: {}
 }).then(res => res);
-
 
 axios.post('apiURL', {
         user: '林一一',
@@ -429,12 +376,6 @@ let arr = [1, 2, 3, 2, 1, 4, 3, 1, 45]
 let res = arr.map(item => {
     return item
 })
-
-
-
-function myMap(callback) {
-
-}
 
 
 let userList = [{
@@ -499,14 +440,6 @@ class EventEmitter {
         }
     }
 
-    on(type, callback) {
-        if (!this.events[type]) {
-            this.events[type] = [callback]
-        } else {
-            this.events[type].push(callback)
-        }
-    }
-
     // 删除订阅
     off(type, callBack) {
         if (!this.events[type]) return;
@@ -514,14 +447,6 @@ class EventEmitter {
             return item !== callBack;
         });
     }
-
-    off(type, callback) {
-        if (!this.events[type]) return;
-        this.events[type] = this.events[type].filter(item => {
-            item !== callback
-        })
-    }
-
 
     // 只订阅一次事件
     once(type, callBack) {
@@ -532,23 +457,13 @@ class EventEmitter {
         this.on(type, fn);
     }
 
-    once(type, callback) {
-        function fn() {
-            callback();
-            this.off(type, fn)
-        }
-        this.on(type, fn)
-    }
-
     // 触发事件
     emit(type, ...rest) {
         this.events[type] &&
             this.events[type].forEach((fn) => fn.apply(this, rest));
     }
 
-    emit(type, ...rest) {
-        this.events[type] && this.events[type].forEach(callback => callback.apply(this, rest))
-    }
+
 }
 
 // 使用如下
@@ -583,26 +498,10 @@ class EventEmitter {
         }
     }
 
-    on(type, callBack) {
-        if (!this.events[type]) {
-            this.events[type] = [callBack]
-        } else {
-            this.events[type].push(callback)
-        }
-    }
-
-
     off(type, callback) {
         if (!this.event[type]) return
         this.event[type] = this.event[type].filter(item => {
             return item !== callback
-        })
-    }
-
-    off(type, callBack) {
-        if (!this.events[type]) return
-        this.events[type] = this.events[type].filter(item => {
-            return item !== callBack
         })
     }
 
@@ -614,23 +513,10 @@ class EventEmitter {
         this.on(type, fn)
     }
 
-    once(type, callBack) {
-        function fn(){
-            callBack()
-            this.off(type, fn)
-        }
-        this.on(type, fn)
-    }
-
-
     emit(type, ...arg) {
         this.event[type] && this.event[type].map(callback => callback.call(this, ...arg))
     }
 
-
-    emit(type, ...arg) {
-        this.events[type] && this.events[type].map(callBack => callBack.apply(this, arg))
-    }
 }
 
 function floorOrder(root) {
@@ -642,7 +528,6 @@ function floorOrder(root) {
         if (q.left) {
             queue.push(q.left)
         }
-
         if (q.right) {
             queue.push(q.right)
         }
