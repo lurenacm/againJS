@@ -84,17 +84,17 @@ function throttle(fn, timeout) {
 
 
 // 洗牌算法
-Array.prototype.shuffle = function() {
+Array.prototype.shuffle = function () {
     var input = this;
-    for (var i = input.length-1; i >=0; i--) {
-        var randomIndex = Math.floor(Math.random()*(i+1));
+    for (var i = input.length - 1; i >= 0; i--) {
+        var randomIndex = Math.floor(Math.random() * (i + 1));
         var itemAtIndex = input[randomIndex];
         input[randomIndex] = input[i];
         input[i] = itemAtIndex;
     }
     return input;
 }
-console.log([1,2,3,4,5,6,7,8].shuffle())
+console.log([1, 2, 3, 4, 5, 6, 7, 8].shuffle())
 
 // // new 操作符
 // function _new(ctor, ...params) {
@@ -139,7 +139,7 @@ function _new(ctor, ...arg) {
 // console.log(_instanceOf())
 
 // 柯里化函数实现
-function curry(fn, len = fn.length){
+function curry(fn, len = fn.length) {
     return _curry.call(this, fn, len)
 }
 
@@ -154,16 +154,32 @@ function _curry(fn, len, ...args) {
     }
 }
 
-let _fn = curry(function(a,b,c,d,e) {
+let _fn = curry(function (a, b, c, d, e) {
     console.log(a + b + c + d + e)
 })
 
-_fn(1, 2, 3, 4, 5); // print: 1,2,3,4,5
-_fn(1)(2)(3, 4, 5); // print: 1,2,3,4,5
-_fn(1, 2)(3, 4)(5); // print: 1,2,3,4,5
-_fn(1)(2)(3)(4)(5); // print: 1,2,3,4,5
+function curry(fn, len = fn.length) {
+    return _curry(fn, len)
+}
 
+function _curry(fn, len, ...arg) {
+    return function (...params) {
+        let _arg = [...arg, ...params]
+        if (_arg.length >= len) {
+            return fn.call(this, ..._arg)
+        } else {
+            return _curry.apply(this, fn, len, _arg)
+        }
+    }
+}
+let fn = curry(function (a, b, c, d, e) {
+    console.log(a + b + c + d + e)
+})
 
+fn(1, 2, 3, 4, 5)
+fn(1, 2)(3, 4, 5)
+fn(1, 2)(3)(4)(5)
+fn(1)(2)(3)(4)(5)
 
 // 深拷贝
 let obj = {

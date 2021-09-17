@@ -26,7 +26,7 @@ console.log(set)
 * `.delete(val)` 删除集合中的某一个元素
 * `clear()` 删除集合中的所有元素
 * 集合是一个对象，所以集合也可以被遍历，`.values(), entry(), .keys()`
-* 同时 Set 实例的集合具备`Symbol.iterator` 接口所以可以被` for of` 循环遍历
+* 同时 Set 实例的集合具备 `Symbol.iterator` 接口所以可以被 `for of` 循环遍历
 * `new Set()` 的返回值是一个对象具备 `Symbol.iterator` 可以被展开运算符 `...` 展开。
 ``` js
 let s = new Set()
@@ -99,7 +99,6 @@ function diff(arr1, arr2) {
 }
 console.log(diff(arr1, arr2))
 ```
-
 
 ### Map 字典的数据解构
 > map 和 set 的区别在于 map 具备属性 `key`，是一种键值的数据结构存储，主要用于存储数据的。
