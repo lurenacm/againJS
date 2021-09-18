@@ -43,6 +43,7 @@ function debounce(fn, timeout) {
     }
 }
 
+
 function debounce(fn, timeout) {
     let timer = null
     return function (...arg) {
@@ -122,21 +123,21 @@ function _new(ctor, ...arg) {
     return obj
 }
 
-// instanceof
-// function _instanceOf(obj, Pro) {
-//     let example = Object.getPrototypeOf(obj)
-//     let ProPrototype = Pro.prototype
-//     while (true) {
-//         if (example === ProPrototype) {
-//             return true
-//         }
-//         if (example === null) {
-//             return false
-//         }
-//         example = Object.getPrototypeOf(obj)
-//     }
-// }
-// console.log(_instanceOf())
+// instanceof 左边.__proto__ == 右边.prototype
+function _instanceOf(obj, Pro) {
+    let example = Object.getPrototypeOf(obj)
+    let ProPrototype = Pro.prototype
+    while (true) {
+        if (example === ProPrototype) {
+            return true
+        }
+        if (example === null) {
+            return false
+        }
+        example = Object.getPrototypeOf(obj)
+    }
+}
+console.log(_instanceOf())
 
 // 柯里化函数实现
 function curry(fn, len = fn.length) {
@@ -243,6 +244,7 @@ function deepClone(obj, cache = new Set()) {
 // }
 
 
+
 Function.prototype.myCall = function (context, ...arg) {
     context = context || window
     context.fn = this
@@ -251,6 +253,7 @@ Function.prototype.myCall = function (context, ...arg) {
     delete context.fn
     return
 }
+
 
 Function.prototype.myCall = function (context, ...arg) {
     context = context || window
@@ -288,6 +291,18 @@ Function.prototype.myBind = function myBind(context, ...arg) {
     // 修改返回函数的 prototype 为绑定函数的 prototype，实例就可以继承绑定函数的原型中的值
     ctor.prototype = this.prototype
     return ctor
+}
+
+
+Function.prototype.myBind = function(context, ...arg){
+    let _this = this
+
+    function newFn(...otherArg){
+        _this.call(this instanceof newFn? this : context, ...[...arg, ...otherArg])
+    }
+
+    newFn.prototype = this.prototype
+    return newFn
 }
 
 
@@ -447,6 +462,7 @@ class EventEmitter {
     constructor() {
         this.events = {};
     }
+
     // 实现订阅
     on(type, callBack) {
         if (!this.events[type]) {
@@ -478,8 +494,6 @@ class EventEmitter {
         this.events[type] &&
             this.events[type].forEach((fn) => fn.apply(this, rest));
     }
-
-
 }
 
 // 使用如下
@@ -535,6 +549,15 @@ class EventEmitter {
 
 }
 
+// 模拟实现 setInterval
+var _setInterval = function(){
+    var timer = setTimeout(() => {
+        clearTimeout(timer)
+        _setInterval()
+    }, 1000)
+}
+_setInterval()
+
 function floorOrder(root) {
     let queue = []
     queue.push(root)
@@ -549,7 +572,6 @@ function floorOrder(root) {
         }
     }
 }
-
 
 function floorOrder(root) {
     if (!root) {
