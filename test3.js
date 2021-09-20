@@ -1,3 +1,5 @@
+// [手写系列](https://juejin.cn/post/6873513007037546510)
+
 let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
 
 function quickSort(arr) {
@@ -140,6 +142,33 @@ function _instanceOf(obj, Pro) {
 console.log(_instanceOf())
 
 // 柯里化函数实现
+
+function curry(func) {
+    return function curried(...args) {
+        // 关键知识点：function.length 用来获取函数的形参个数
+        // 补充：arguments.length 获取的是实参个数
+        if (args.length >= func.length) {
+            return func.apply(this, args)
+        }
+        return function (...args2) {
+            return curried.apply(this, args.concat(args2))
+        }
+    }
+}
+
+// 测试
+function sum(a, b, c) {
+    return a + b + c
+}
+const curriedSum = curry(sum)
+console.log(curriedSum(1, 2, 3))
+console.log(curriedSum(1)(2, 3))
+console.log(curriedSum(1)(2)(3))
+
+
+
+
+// 柯里化函数实现
 function curry(fn, len = fn.length) {
     return _curry.call(this, fn, len)
 }
@@ -156,24 +185,6 @@ function _curry(fn, len, ...args) {
 }
 
 let _fn = curry(function (a, b, c, d, e) {
-    console.log(a + b + c + d + e)
-})
-
-function curry(fn, len = fn.length) {
-    return _curry(fn, len)
-}
-
-function _curry(fn, len, ...arg) {
-    return function (...params) {
-        let _arg = [...arg, ...params]
-        if (_arg.length >= len) {
-            return fn.call(this, ..._arg)
-        } else {
-            return _curry.apply(this, fn, len, _arg)
-        }
-    }
-}
-let fn = curry(function (a, b, c, d, e) {
     console.log(a + b + c + d + e)
 })
 
@@ -294,11 +305,11 @@ Function.prototype.myBind = function myBind(context, ...arg) {
 }
 
 
-Function.prototype.myBind = function(context, ...arg){
+Function.prototype.myBind = function (context, ...arg) {
     let _this = this
 
-    function newFn(...otherArg){
-        _this.call(this instanceof newFn? this : context, ...[...arg, ...otherArg])
+    function newFn(...otherArg) {
+        _this.call(this instanceof newFn ? this : context, ...[...arg, ...otherArg])
     }
 
     newFn.prototype = this.prototype
@@ -550,7 +561,7 @@ class EventEmitter {
 }
 
 // 模拟实现 setInterval
-var _setInterval = function(){
+var _setInterval = function () {
     var timer = setTimeout(() => {
         clearTimeout(timer)
         _setInterval()
