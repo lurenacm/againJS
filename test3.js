@@ -684,3 +684,25 @@ new Promise((resolve, reject) => {
 
 // B G C F  D  E A
 // B G C D  F  E A
+
+
+// 已知数组 a=[1,[2,[3,[4,null]]]], 实现数组 b=[4,[3,[2,[1,null]]]]
+function reverseArray(arr) {
+    let a = arr.flat(Infinity);
+    for (let i = 0; i < Math.floor((a.length - 1) / 2); i++) {
+        [a[i], a[a.length - 2 - i]] = [a[a.length - 2 - i], a[i]]
+    }
+    for (let i = a.length - 2; i >= 1; i--) {
+        if (i === a.length - 2) {
+            a[i] = [a[i], null];
+            continue;
+        }
+        a[i] = [a[i], a[i + 1]]
+    }
+    return a.slice(0, 2);
+}
+
+//测试
+let arr = [1,[2,[3,null]]]
+console.log(reverseArray(arr));
+
