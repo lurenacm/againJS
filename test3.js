@@ -1,12 +1,10 @@
 // [手写系列](https://juejin.cn/post/6873513007037546510)
-
 let arr = [1, 3, 6, 9, 5, 8, 13, 76, 23, 45, 21, 7]
 
 function quickSort(arr) {
     if (arr.length <= 1) {
         return arr;
     }
-
     let left = []
     let right = []
     let pivot = arr[0]
@@ -18,18 +16,6 @@ function quickSort(arr) {
 console.log(quickSort(arr))
 // [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
 
-function quickSort(arr) {
-    if (arr.length <= 1) return arr
-    let p = arr[0]
-    let arrLeft = []
-    let arrRight = []
-
-    for (let i = 0; i < arr.length; i++) {
-        arr[i] < p ? arrLeft.push(arr[i]) : arrRight.push(arr[i])
-    }
-
-    return [...quickSort(arrLeft), p, ...quickSort(arrRight)]
-}
 
 // 防抖
 function debounce(fn, timeout) {
@@ -49,7 +35,7 @@ function debounce(fn, timeout) {
 function debounce(fn, timeout) {
     let timer = null
     return function (...arg) {
-        clearTimeout(timer)
+        clearInterval(timer)
         timer = setTimeout(() => {
             fn.apply(this, arg)
         }, timeout)
@@ -73,6 +59,7 @@ function throttle(fn, timeout) {
 }
 
 
+
 function throttle(fn, timeout) {
     let timer = null
     return function (...arg) {
@@ -80,7 +67,7 @@ function throttle(fn, timeout) {
         timer = setTimeout(() => {
             fn.apply(this, arg)
             timer = null
-        })
+        }, timeout)
     }
 }
 
@@ -98,6 +85,8 @@ Array.prototype.shuffle = function () {
     return input;
 }
 console.log([1, 2, 3, 4, 5, 6, 7, 8].shuffle())
+
+
 
 // // new 操作符
 // function _new(ctor, ...params) {
@@ -125,6 +114,7 @@ function _new(ctor, ...arg) {
     return obj
 }
 
+
 // instanceof 左边.__proto__ == 右边.prototype
 function _instanceOf(obj, Pro) {
     let example = Object.getPrototypeOf(obj)
@@ -141,8 +131,24 @@ function _instanceOf(obj, Pro) {
 }
 console.log(_instanceOf())
 
-// 柯里化函数实现
 
+
+function _instanceOf(exm, targetObj) {
+    let exmPro = Object.getPrototypeOf(exm)
+    let tarPrototype = tarPrototype.prototype
+    while (exmPro) {
+        if (exmPro === tarPrototype) {
+            return true
+        }
+        if (exmPro == null) {
+            return false
+        }
+        exmPro = Object.getPrototypeOf(exmPro)
+    }
+}
+
+
+// 柯里化函数实现
 function curry(func) {
     return function curried(...args) {
         // 关键知识点：function.length 用来获取函数的形参个数
@@ -164,7 +170,6 @@ const curriedSum = curry(sum)
 console.log(curriedSum(1, 2, 3))
 console.log(curriedSum(1)(2, 3))
 console.log(curriedSum(1)(2)(3))
-
 
 
 
@@ -259,7 +264,6 @@ function deepClone(obj, cache = new Set()) {
 Function.prototype.myCall = function (context, ...arg) {
     context = context || window
     context.fn = this
-
     context.fn(...arg)
     delete context.fn
     return
@@ -326,10 +330,10 @@ async function runPromiseByQueue(myPromises) {
 
 const createPromise = (time, id) => {
     return () => {
-        new Promise(solve => {
+        new Promise(resole => {
             setTimeout(() => {
                 console.log("promise", id);
-                solve();
+                resole();
             }, time)
         });
     }
@@ -398,6 +402,7 @@ axios.post('apiURL', {
     .catch(error => {
         console.log(error)
     })
+
 
 // ajax
 // 1. 创建 XMLHttpRequest 实例
@@ -468,6 +473,30 @@ while (str = readline()) {
     break
 }
 
+//斐波那契额数列 0 1 1 2 3 5 8 13 21 34
+function fib(n) {
+    if (n === 0) {
+        return 0
+    }
+    if (n === 1 || n === 2) {
+        return 1
+    }
+    return fib(n - 1) + fib(n - 2)
+}
+
+
+function fib(n) {
+    if (n === 0) return 1
+    let dp = new Array(n + 1).fill(0)
+    dp[1] = 1
+    dp[2] = 1
+    for (let i = 3; i <= dp.length; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2]
+    }
+    return dp[n]
+}
+
+
 
 class EventEmitter {
     constructor() {
@@ -526,39 +555,7 @@ event.once("dbClick", () => {
     console.log(123456);
 });
 
-class EventEmitter {
-    constructor() {
-        this.event = {}
-    }
 
-    on(type, callback) {
-        if (!this.event[type]) {
-            this.event[type] = [callback]
-        } else {
-            this.event[type].push(callback)
-        }
-    }
-
-    off(type, callback) {
-        if (!this.event[type]) return
-        this.event[type] = this.event[type].filter(item => {
-            return item !== callback
-        })
-    }
-
-    once(type, callback) {
-        function fn() {
-            callback()
-            this.off(type, fn)
-        }
-        this.on(type, fn)
-    }
-
-    emit(type, ...arg) {
-        this.event[type] && this.event[type].map(callback => callback.call(this, ...arg))
-    }
-
-}
 
 // 模拟实现 setInterval
 var _setInterval = function () {
@@ -703,6 +700,76 @@ function reverseArray(arr) {
 }
 
 //测试
-let arr = [1,[2,[3,null]]]
+let arr = [1, [2, [3, null]]]
 console.log(reverseArray(arr));
 
+
+// ## 树
+// * js 中可以使用 Object，Array构建树的结构。例如 vue 中的虚拟DOM
+// * 二叉树的遍历算法，分为深度/广度优先遍历、先中后序遍历
+
+// ## 深度和广度优先遍历
+// [深度和广度](./img/深度广度优先遍历.jpg)
+// * 深度遍历是指：尽可能深的遍历树的节点。例如左边的树结构是从最上层根节点遍历到最下层的
+// * 广度优先遍历指：从离根节点最近的子节点处访问，逐步访问完所有子节点。第一层b c中，b离根节点最近，因为 b 先被访问所以先访问 d e再访问 f g，广度遍历从 `a-b-c-d-e-f-g` 遍历
+
+// ### 深度优先遍历算法
+// * 步骤一：先访问根节点
+// * 步骤二：对根节点下面的子节点逐步遍历，这里涉及到递归
+// > 深度优先遍历的过程就是递归的过程。根节点a访问了到访问子节点b，b根节点访问后到子节点d，最后到子节点e。
+// * 实现如下：
+
+const tree = {
+    val: "a",
+    children: [{
+            val: "b",
+            children: [{
+                    val: "d",
+                    children: []
+                },
+                {
+                    val: "e",
+                    children: []
+                }
+            ]
+        },
+        {
+            val: "c",
+            children: [{
+                val: "f",
+                children: []
+            }, {
+                val: "g",
+                children: []
+            }]
+        }
+    ]
+}
+
+function dfs(root) {
+    console.log(root.val)
+    root.children.forEach(element => {
+        dfs(element)
+    });
+}
+dfs(tree)
+
+
+// ### 广度优先遍历算法
+// * 步骤一：新建一个队列，将根节点入队
+// * 步骤二：队头的根节点出队并访问
+// * 步骤三：最近的子节点挨个全部入队
+// * 步骤四：重复第二、第三步骤，直到队列清空
+// > 先访问a，b，后b的子节点入队，访问c，c的子节点入队，再访问d...依次清空，只有根节点出队访问了，子节点才可以入队
+
+function bfs(root) {
+    let q = [root]
+    while (q.length > 0) {
+        let res = q.shift()
+        console.log(res.val)
+        res.children.forEach(child => {
+            q.push(child)
+        });
+    }
+}
+bfs(tree)

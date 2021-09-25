@@ -5,26 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        span:nth-child(2){color:green;}
-    </style>
 </head>
 
 <body>
-    <!-- <input type="text" id="input" /> -->
-    <div>
-        <span type="1">1</span>
-        <span type="2">2</span>
-        <span type="3">3</span>
-    </div>
+    <ul>
+        <li><span class="name">事件 1</span>, 状态: todo</li>
+        <li><span class="name">事件 2</span>, 状态: todo</li>
+        <li><span class="name">事件 3</span>, 状态: todo</li>
+    </ul>
 </body>
+
+
 <script>
-    let btn = document.getElementsByTagName('button');
-    for (let i = 0; i < btn.length; i++) {
-        btn[i].addEventListener('click', (event) => {
-            console.log(event.target.parentNode.remove())
+    var liNode = document.getElementsByTagName('li')
+    liNode = [...liNode]
+    let state = ['doing', 'done']
+
+    let index = 0
+    liNode.forEach(li => {
+        li.addEventListener('click', (event) => {
+            if (index !== 2) {
+                event.target.innerText = `事件，状态:${state[index]}`
+                index++
+            }
         })
-    }
+    });
+
 
     //     let obj = {}
     //     let temp = {}
