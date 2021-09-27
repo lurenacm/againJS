@@ -59,7 +59,6 @@ function throttle(fn, timeout) {
 }
 
 
-
 function throttle(fn, timeout) {
     let timer = null
     return function (...arg) {
@@ -130,7 +129,6 @@ function _instanceOf(obj, Pro) {
     }
 }
 console.log(_instanceOf())
-
 
 
 function _instanceOf(exm, targetObj) {
@@ -294,6 +292,7 @@ Function.prototype.myBind = function myBind(context, ...arg) {
         _this.call(context, ...arg.concat(...otherArg)) // 利用 apply 原理，改变 this 指向，同时执行返回的新函数。
     }
 }
+
 
 
 Function.prototype.myBind = function myBind(context, ...arg) {
