@@ -49,6 +49,7 @@
   - [V8 内存回收机制](https://github.com/lurenacm/againJS/issues/23)
   - [JS 中 CommonJS 和 ESModule 模块化理解](https://github.com/lurenacm/againJS/issues/24)
   - [JS 中的事件委托机制和使用场景](https://github.com/lurenacm/againJS/issues/25)
+  - [JS 中的 Generator 和 Iterator](https://github.com/lurenacm/againJS/issues/26)
 ### JS 模拟实现系列
   - [模拟实现 new ](https://github.com/lurenacm/againJS/issues/14)
   - [面试 |call, apply, bind的模拟实现和经典面试题](https://github.com/lurenacm/againJS/issues/13)  

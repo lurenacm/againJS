@@ -376,3 +376,67 @@
 //         map.set(nums[i], i);
 //     }
 // }
+
+
+// class Iterator {
+//     constructor(assemble) {
+//         this.assemble = assemble
+//         this.index = 0
+//     }
+
+//     next() {
+//         var {assemble, index} = this
+//         if(index > assemble.length-1){
+//             return {
+//                 done:true,
+//                 value: undefined
+//             }
+//         }
+//         return {
+//             done:false,
+//             value:assemble[this.index++]
+//         }
+//     }
+// }
+
+// let iter = new Iterator([1,2,3])
+// console.log(iter.next())
+// console.log(iter.next()) 
+// console.log(iter.next())
+// console.log(iter.next())
+
+// let obj = {
+//     name: '林一一',
+//     age: 18,
+//     [Symbol.iterator]: Array.prototype[Symbol.iterator]
+// }
+
+
+
+var obj = {
+    0: '林一一',
+    1: 18,
+    length: 2,
+    // [Symbol.iterator]:Array.prototype[Symbol.iterator]
+    [Symbol.iterator]: function () {
+        let index = 0;
+        let self = this
+        return {
+            next() {
+                if (index > self.length - 1) {
+                    return {
+                        done: true,
+                        value: undefined
+                    }
+                }
+                return {
+                    done: false,
+                    value: self[index++]
+                }
+            }
+        }
+    }
+}
+for (let item of obj) {
+    console.log(item)
+}
