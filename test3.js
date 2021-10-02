@@ -17,6 +17,34 @@ console.log(quickSort(arr))
 // [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
 
 
+function quickSort(arr) {
+    if (arr.length <= 1) return arr
+    let leftArr = []
+    let rightArr = []
+    let p = arr[0]
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] < p ? leftArr.push(arr[i]) : rightArr.push(arr[i])
+    }
+    return [...quickSort(leftArr), p, ...quickSort(rightArr)]
+}
+quickSort(arr)
+
+
+// 选择排序：概念：选择排序是指从数组中找出最小的一个值，排在数组中的第一位。再从剩余的数组选择最小的数，
+// 依次循环。以数组的第一个为最小值开始比较
+let arr = [3, 2, 6, 9, 5, 8, 13, 76, 23, 45, 1, 7]
+
+function selectionSort(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            arr[i] >= arr[j] ? [arr[i], arr[j]] = [arr[j], arr[i]] : null
+        }
+    }
+    return arr
+}
+selectionSort(arr)
+
+
 // 防抖
 function debounce(fn, timeout) {
     let timer = null
@@ -27,6 +55,17 @@ function debounce(fn, timeout) {
         clearTimeout(timer)
         timer = setTimeout(() => {
             fn.call(_this, ...args)
+        }, timeout)
+    }
+}
+
+
+function debounce(callBack, timeout){
+    let timer = null
+    return function(...args){
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            callBack.apply(this, args)
         }, timeout)
     }
 }
@@ -132,16 +171,16 @@ console.log(_instanceOf())
 
 
 function _instanceOf(exm, targetObj) {
-    let exmPro = Object.getPrototypeOf(exm)
-    let tarPrototype = tarPrototype.prototype
-    while (exmPro) {
-        if (exmPro === tarPrototype) {
+    let exmProto = Object.getPrototypeOf(exm)
+    let targetPrototype = targetObj.prototype
+    while (exmProto) {
+        if (exmProto == targetPrototype) {
             return true
         }
-        if (exmPro == null) {
+        if (exmProto == null) {
             return false
         }
-        exmPro = Object.getPrototypeOf(exmPro)
+        exmProto = Object.getPrototypeOf(exmProto)
     }
 }
 
@@ -224,8 +263,8 @@ let obj = {
 //     }
 //     return cloneObj
 // }
-
 // deepClone(obj)
+
 
 
 function deepClone(obj, cache = new Set()) {
@@ -268,15 +307,6 @@ Function.prototype.myCall = function (context, ...arg) {
 }
 
 
-Function.prototype.myCall = function (context, ...arg) {
-    context = context || window
-    context.fn = this
-    context.fn(...arg)
-    delete context.fn
-    return
-}
-
-
 Function.prototype.myApply = function (context, args) {
     context = context || window
     context.fn = this
@@ -292,7 +322,6 @@ Function.prototype.myBind = function myBind(context, ...arg) {
         _this.call(context, ...arg.concat(...otherArg)) // 利用 apply 原理，改变 this 指向，同时执行返回的新函数。
     }
 }
-
 
 
 Function.prototype.myBind = function myBind(context, ...arg) {
@@ -311,12 +340,11 @@ Function.prototype.myBind = function myBind(context, ...arg) {
 Function.prototype.myBind = function (context, ...arg) {
     let _this = this
 
-    function newFn(...otherArg) {
-        _this.call(this instanceof newFn ? this : context, ...[...arg, ...otherArg])
+    function ctor(...otherArg) {
+        _this.apply(this instanceof ctor ? this : context, [...arg, ...otherArg])
     }
-
-    newFn.prototype = this.prototype
-    return newFn
+    ctor.prototype = this.prototype
+    return ctor
 }
 
 
@@ -337,11 +365,14 @@ const createPromise = (time, id) => {
         });
     }
 }
+
+
 runPromiseByQueue([
     createPromise(3000, 1),
     createPromise(2000, 2),
     createPromise(1000, 3)
 ]);
+
 
 
 // 并行
@@ -485,7 +516,7 @@ function fib(n) {
 
 
 function fib(n) {
-    if (n === 0) return 1
+    if (n === 0) return 0
     let dp = new Array(n + 1).fill(0)
     dp[1] = 1
     dp[2] = 1
@@ -753,6 +784,22 @@ function dfs(root) {
 }
 dfs(tree)
 
+// 非递归
+// 栈：后进先出，深度优先队列
+// 栈：后进先出，深度优先队列
+
+function dfs(node) {
+    let stacks = [node];
+    while (stacks.length) {
+        let item = stacks.pop();
+        console.log(item.val)
+        for (let i = item.children.length - 1; i >= 0; i--) {
+            stacks.push(item.children[i]);
+        }
+    }
+}
+dfs(tree)
+
 
 // ### 广度优先遍历算法
 // * 步骤一：新建一个队列，将根节点入队
@@ -772,3 +819,61 @@ function bfs(root) {
     }
 }
 bfs(tree)
+
+
+class LURCache {
+    constructor(capacity) {
+        this.capacity = capacity
+        this.map = new Map()
+    }
+
+    // 查找key的val
+    get(key) {
+        if (this.map.has(key)) {
+            // 存在即更新
+            let val = this.map.get(key)
+            this.map.delete(key)
+            this.map.set(key, val)
+            return val
+        }
+        return -1
+    }
+
+    //新增 key 的 val
+    put(key, val) {
+        if (this.map.has(key)) this.map.delete(key)
+
+        this.map.set(key, val)
+        if (this.map.size > this.capacity) {
+            this.map.delete(this.map.entries().next().value[0])
+        }
+    }
+
+    // put(key, val) {
+    //     if (this.map.has(key)) this.map.delete(key); // 如果有，删除
+
+    //     this.map.set(key, val); // 放到最下面表示最新使用
+
+    //     if (this.map.size > this.capacity) {
+    //         // 这里有个知识点
+    //         // map的entries方法，还有keys方法(可以看mdn))，会返回一个迭代器
+    //         // 迭代器调用next也是顺序返回，所以返回第一个的值就是最老的，找到并删除即可
+    //         this.map.delete(this.map.entries().next().value[0])
+    //     }
+    // }
+}
+
+
+// 二进制转十进制
+function parse(str) {
+    let sum = 0
+    var j = str.length
+    for (let i = 0; i < str.length; i++) {
+        sum += parseInt(str[i]) * Math.pow(2,--j)
+    }
+    console.log(sum)
+}
+parse('1011')
+
+// 26 进制转十进制
+

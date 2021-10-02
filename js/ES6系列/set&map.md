@@ -8,6 +8,7 @@ let set = new Set()
 typeof set  // "object"
 ```
 * `Set()` 构造函数的参数必须是一个具备 iterator 接口的参数，比如字符串、数组
+
 ``` js
 let set = new Set('abcdegf')
 console.log(set)
@@ -99,6 +100,7 @@ function diff(arr1, arr2) {
 }
 console.log(diff(arr1, arr2))
 ```
+
 
 ### Map 字典的数据解构
 > map 和 set 的区别在于 map 具备属性 `key`，是一种键值的数据结构存储，主要用于存储数据的。

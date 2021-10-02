@@ -5,3 +5,11 @@
 * iterator 还具备一个对象 `{done:boolean, value:xxx}`。done表示是否遍历完成，value 表示返回的值
 
 
+### 具备 Iterator 接口的迭代器
+* 
+
+
+### 实现迭代器
+``` js
+
+```

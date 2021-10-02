@@ -12,7 +12,7 @@
     }
 
     .green {
-        color: green;
+        color: rgb(113, 126, 113);
     }
 
     .red {
@@ -21,31 +21,19 @@
 </style>
 
 <body>
-    <div class="red green blue">颜色</div>
-
-    <ul>
-        <li><span class="name">事件 1</span>, 状态: todo</li>
-        <li><span class="name">事件 2</span>, 状态: todo</li>
-        <li><span class="name">事件 3</span>, 状态: todo</li>
-    </ul>
+    <div id="container">
+        <button class="btn1">btn</button>
+    </div>
 </body>
 
-
 <script>
-    var liNode = document.getElementsByTagName('li')
-    liNode = [...liNode]
-    let state = ['doing', 'done']
-
-    let index = 0
-    liNode.forEach(li => {
-        li.addEventListener('click', (event) => {
-            if (index !== 2) {
-                event.target.innerText = `事件，状态:${state[index]}`
-                index++
-            }
-        })
-    });
-
+    let container = document.getElementById("container")
+    let btn1 = document.getElementsByClassName('btn1')[0]
+    btn1.addEventListener('click', () => {
+        container.removeChild(btn1)
+        container.innerHTML = `<button class="btn2">btn2</button> <button class="btn3">btn3</button>`
+        btn1.removeEventListener('click', () => {})
+    })
 
     //     let obj = {}
     //     let temp = {}
