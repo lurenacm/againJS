@@ -413,30 +413,5 @@
 
 
 
-var obj = {
-    0: '林一一',
-    1: 18,
-    length: 2,
-    // [Symbol.iterator]:Array.prototype[Symbol.iterator]
-    [Symbol.iterator]: function () {
-        let index = 0;
-        let self = this
-        return {
-            next() {
-                if (index > self.length - 1) {
-                    return {
-                        done: true,
-                        value: undefined
-                    }
-                }
-                return {
-                    done: false,
-                    value: self[index++]
-                }
-            }
-        }
-    }
-}
-for (let item of obj) {
-    console.log(item)
-}
+10+ {}      // '10[object Object]'
+10 + [10]  //
