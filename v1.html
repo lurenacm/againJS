@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <style>
-    .blue {
+    /* .blue {
         color: blue;
     }
 
@@ -17,13 +17,30 @@
 
     .red {
         color: red;
+    } */
+    html{
+        font-size: 12px;
+    }
+    body{
+        font-size: 14px;
+    }
+    .parent{
+        font-size: 16px;
+    }
+    .child{
+        font-size: 18px;
+        width: 10rem;
+        height: 5em;
+        box-sizing: border-box;
     }
 </style>
 
 <body>
-    <div id="container">
-        <button class="btn1">btn</button>
-    </div>
+    <main class="parent">
+        <div class="child">
+            我是
+        </div>
+    </main>
 </body>
 
 <script>
