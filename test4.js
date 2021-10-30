@@ -74,3 +74,16 @@ function quick(str){
     console.log(newArr, markArr)
 }
 console.log(quick('12A???zc'))
+
+
+
+class Example{
+    constructor(){
+    }
+    getName(){}
+    getAge(){}
+    static postDate(){
+        console.log(this)
+    }
+}
+new Example()

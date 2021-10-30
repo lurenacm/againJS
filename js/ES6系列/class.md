@@ -23,12 +23,28 @@ class Person {
 let person = new Person('a', 12)
 person.say()
 ```
-* es6 规范中规定单独调用原型上的方法 `this`是不存在的为 `undefined`。
+* es6 规范中规定单独调用原型上的方法 `this` 是不存在的为 `undefined`。
 ``` js
 let say = person.say
 say()   // undefined
 ```
 > 单独使用了类中的`say()`方法，没有实例调用，`this` 是不存在的。
+
+* 类 class 中的所有非静态方法都会被添加到 this 中，实例就可以拿到
+``` js
+class Example{
+    constructor(){
+    }
+    getName(){}
+    getAge(){}
+    static postDate(){}
+}
+new Example()   // ['getName', 'getAge']
+```
+* static 静态的方法不会被添加到 this 中。这是类的私有属性
+
+* 派生类(子类)中不像基类的构造函数中初始的 this 绑定。在派生类的构造函数中需要调用 `super`，才可以生成一个 this 的绑定。在静态方法中 this 指向的就是类本身。
+
 
 
 ### ES5 和ES6 中类的差别
