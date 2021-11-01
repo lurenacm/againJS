@@ -1,89 +1,73 @@
-// var reverseBetween = function (head, left, right) {
-//     let cur = head
-//     let next = null
-//     let first = null
-//     let last = null
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+var reverseBetween = function (head, left, right) {
+    // 1
+    const dummy_node = new ListNode(-1);
+    dummy_node.next = head;
+    // 2
+    let pre = dummy_node;
+    for (let i = 0; i < left - 1; ++i) {
+        pre = pre.next;
+    }
+    // 3
+    let cur = pre.next;
+    for (let i = 0; i < right - left; i++) {
+        const next = cur.next;
+        // next.next = cur
+        cur.next = next.next; // 3->2
+        next.next = pre.next; // 
+        pre.next = next;
+        console.log(dummy_node)
+    }
+    return dummy_node.next;
+};
+// 1，2，3，4，5
+// 1，2，4，3，5
 
-//     if (left === right) {
-//         return head
-//     }
-
-//     while (cur) {
-//         if (cur.val === left) {
-//             first = cur
-//         }
-//         next = cur.next
-//         cur = next
-//         if (cur.val === right) {
-//             last = cur
-//             break
-//         }
-//     }
-
-//     cur = first
-
-//     while(cur){
-
-//     }
-
-// }
-
-
-// // const shape = {
-
-// // }
-
-// // (shape => )()
-
-
-// // const twoSum = function (nums, target) {
-// //     const len = nums.length;
-// //     const map = new Map();
-
-// //     for (let i = 0; i < len; i++) {
-// //         const needNum = target - nums[i];
-
-// //         if (map.has(needNum) && i !== map.get(needNum)) {
-// //             return [i, map.get(needNum)];
-// //         }
-// //         // 边读边存
-// //         map.set(nums[i], i);
-// //     }
-// // }
-
-
-
-
-function quick(str){
-    let arr = str.split("")
-    let markArr = []
-    let len = arr.length
-    for (let i = 0; i < len; i++) {
-        if(arr[i] === '?'){
-            markArr.push(i)
+var partition = function (head, x) {
+    let small = new ListNode(0);
+    const smallHead = small;
+    let large = new ListNode(0);
+    const largeHead = large;
+    while (head !== null) {
+        if (head.val < x) {
+            small.next = head;
+            small = small.next;
+        } else {
+            large.next = head;
+            large = large.next;
         }
+        head = head.next;
+    }
+    large.next = null;
+    small.next = largeHead.next;
+    return smallHead.next;
+};
+
+// 输入：head = [1,4,3,2,5,2], x = 3
+// 输出：[1,2,2,4,3,5]
+var partition = function (head, x) {
+    // 哨兵节点
+    let less = new ListNode(0)
+    let lessHead = less
+    // 哨兵节点
+    let more = new ListNode(0)
+    let moreHead = more
+    let cur = head
+    while (cur) {
+        if (cur.val < x) {
+            less.next = cur
+            less = less.next
+        } else {
+            more.next = cur
+            more = more.head
+        }
+        cur = cur.next
     }
 
-    let newArr = arr.filter(item => {
-        return item !== "?"
-    })
-    newArr.sort()
-
-    
-
-    console.log(newArr, markArr)
-}
-console.log(quick('12A???zc'))
-
-
-
-class Example{
-    constructor(){
-    }
-    getName(){}
-    getAge(){}
-    static postDate(){
-        console.log(this)
-    }
-}
-new Example()
+};
