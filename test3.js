@@ -17,21 +17,9 @@ console.log(quickSort(arr))
 // [1,  3,  5,  6,  7, 8,  9, 13, 21, 23, 45, 76]
 
 
-function quickSort(arr) {
-    if (arr.length <= 1) return arr
-    let leftArr = []
-    let rightArr = []
-    let p = arr[0]
-    for (let i = 0; i < arr.length; i++) {
-        arr[i] < p ? leftArr.push(arr[i]) : rightArr.push(arr[i])
-    }
-    return [...quickSort(leftArr), p, ...quickSort(rightArr)]
-}
-quickSort(arr)
 
-
-// 选择排序：概念：选择排序是指从数组中找出最小的一个值，排在数组中的第一位。再从剩余的数组选择最小的数，
-// 依次循环。以数组的第一个为最小值开始比较
+// 选择排序：概念：选择排序是指从数组中找出最小的一个值，排在数组中的第一位。
+// 再从剩余的数组选择最小的数，依次循环。以数组的第一个为最小值开始比较
 let arr = [3, 2, 6, 9, 5, 8, 13, 76, 23, 45, 1, 7]
 
 function selectionSort(arr) {
@@ -55,17 +43,6 @@ function debounce(fn, timeout) {
         clearTimeout(timer)
         timer = setTimeout(() => {
             fn.call(_this, ...args)
-        }, timeout)
-    }
-}
-
-
-function debounce(callBack, timeout){
-    let timer = null
-    return function(...args){
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            callBack.apply(this, args)
         }, timeout)
     }
 }
@@ -169,20 +146,6 @@ function _instanceOf(obj, Pro) {
 }
 console.log(_instanceOf())
 
-
-function _instanceOf(exm, targetObj) {
-    let exmProto = Object.getPrototypeOf(exm)
-    let targetPrototype = targetObj.prototype
-    while (exmProto) {
-        if (exmProto == targetPrototype) {
-            return true
-        }
-        if (exmProto == null) {
-            return false
-        }
-        exmProto = Object.getPrototypeOf(exmProto)
-    }
-}
 
 
 // 柯里化函数实现
