@@ -227,23 +227,23 @@
 // let res =  []
 // for(var ){
 //     for(){
-        
+
 //     }
 //     if( >N/2){
-        
+
 //     }    
 // }
 
 // [1,1,1,4,6]
 // N/2
 
-function quickSort(arr){
-    if(arr.length <=1) return arr
+function quickSort(arr) {
+    if (arr.length <= 1) return arr
     let leftArr = []
     let rightArr = []
     let q = arr[0]
     for (let index = 1; index < arr.length; index++) {
-        arr[index] >=q? rightArr.push(arr[index]) : leftArr.push(arr[index])
+        arr[index] >= q ? rightArr.push(arr[index]) : leftArr.push(arr[index])
     }
     return [...quickSort(leftArr), q, ...quickSort(rightArr)]
 }
@@ -251,10 +251,180 @@ function quickSort(arr){
 
 
 // 冒泡
-function bubbleSort(arr){
+function bubbleSort(arr) {
     for (let i = 0; i < arr.length; i++) {
-        for (let j = 1; j < arr.length; j++) {
-            
-        }        
+        for (let j = 0; j < arr.length; j++) {
+            arr[j] >= arr[j + 1] ? [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]] : null
+        }
+    }
+    console.log(arr)
+}
+// bubbleSort([1,5,2,7,3,9,1])
+
+function insertSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        while (arr[i] < arr[i - 1]) {
+            [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]]
+            i--
+        }
+    }
+    console.log(arr)
+}
+// insertSort([1,6,2,8,3,7,4,6])
+
+
+// 持续触发事件，这个函数只触发一次。
+function debounce(callback, timeout) {
+    let timer = null
+    return function (...args) {
+        let _this = this
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            callback.call(_this, ...args)
+        }, timeout)
     }
 }
+
+function throttle(fn, timeout) {
+    let timer = null
+    return function (...args) {
+        let _this = this
+        if (timer) return
+        timer = setTimeout(() => {
+            fn.call(_this, ...args)
+        }, timeout)
+    }
+}
+
+var obj = {
+    name: '一一',
+    age: 18,
+    getName: function () {
+        return this.name
+    },
+    person: {
+        name: 'er'
+    }
+}
+
+function deepClone(obj, cache = new Set()) {
+    if (cache.has(obj)) return obj
+    cache.add(obj)
+    if (typeof obj == null) return obj
+    if (obj instanceof RegExp) return new RegExp(obj)
+    if (obj instanceof Date) return new Date(obj)
+    if (typeof obj != 'object') return obj
+    let cloneObj = new obj.constructor
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], cache)
+        }
+    }
+    return cloneObj
+}
+deepClone(obj)
+
+
+Promise.myall = function (promiseArr) {
+    return new Promise((resolve, reject) => {
+        let ans = []
+        let count = 0
+        for (let index = 0; index < promiseArr.length; index++) {
+            Promise.resolve(promiseArr[index]).then(res => {
+                ans.push(res)
+                count++
+                count === promiseArr.length ? resolve(ans) : null
+            }).catch(err => reject(err))
+        }
+    })
+}
+
+Promise.myRace = function (promiseArr) {
+    return new Promise((resolve, reject) => {
+        promiseArr.forEach(p => {
+            Promise.resolve(p).then(res => {
+                resolve(res)
+            }).catch(err => reject(err))
+        });
+    })
+}
+
+var p1 = setTimeout(() => {
+    return 1
+}, 100)
+
+
+axios.post('url', {
+    user: '',
+    age: 18
+}).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log(err)
+})
+
+let xhr = new XMLHttpRequest()
+xhr.open('get', url)
+xhr.send()
+xhr.onreadystatechange = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log(xhr.responseText)
+    }
+}
+
+// 斐波那契，n 是下标
+function fib(n) {
+    if (n == 0) {
+        return 0
+    }
+    if (n === 1 || n === 2) {
+        return 1
+    }
+    return fib(n - 1) + fib(n - 2)
+}
+
+function fib(n) {
+    if (n == 0) return 0
+    let dp = new Array(n + 1).fill(-1)
+    dp[1] = [1]
+    dp[2] = [1]
+    for (let i = 3; i <= dp.length; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2]
+    }
+    return dp[n]
+}
+
+class EventEmitter {
+    constructor() {
+        this.events = {}
+    }
+
+    on(type, callback) {
+        if (!this.events[type]) {
+            this.events[type] = [callback]
+        } else {
+            this.events[type].push(callback)
+        }
+    }
+
+    once(type, callback) {
+        function fn(){
+            callback()
+            this.off(type, fn)
+        }
+        this.on(type, fn)
+    }
+
+    off(type) {
+        this.events[type] = null
+    }
+
+    emit(type, ...params) {
+        this.events[type] && this.events[type].forEach(fn => {
+            fn.call(this, ...params)
+        })
+    }
+}
+
+
+ 

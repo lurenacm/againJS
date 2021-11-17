@@ -32,8 +32,11 @@ function selectionSort(arr) {
 }
 selectionSort(arr)
 
+// 插入排序：前两个先比较，找出小的插入到前面
+// 随后第三位数继续和前面两位排好的数循环相比，其他同样。
 
-// 防抖
+// 防抖，持续触发事件，这个函数只在规定的时间内执行一次
+// 一最新的一次触发开始执行。
 function debounce(fn, timeout) {
     let timer = null
     return function (...args) {
@@ -48,18 +51,8 @@ function debounce(fn, timeout) {
 }
 
 
-function debounce(fn, timeout) {
-    let timer = null
-    return function (...arg) {
-        clearInterval(timer)
-        timer = setTimeout(() => {
-            fn.apply(this, arg)
-        }, timeout)
-    }
-}
-
-
-//节流 throttle
+//节流 throttle，持续触发事件，那么每达到触发时间，都会执行一次
+// 先执行完第一次，才会处理下一次的触发。
 function throttle(fn, timeout) {
     let timer = null
     return function (...args) {
@@ -74,17 +67,6 @@ function throttle(fn, timeout) {
     }
 }
 
-
-function throttle(fn, timeout) {
-    let timer = null
-    return function (...arg) {
-        if (timer) return
-        timer = setTimeout(() => {
-            fn.apply(this, arg)
-            timer = null
-        }, timeout)
-    }
-}
 
 
 
@@ -337,7 +319,6 @@ runPromiseByQueue([
 ]);
 
 
-
 // 并行
 Promise.myAll = function (promiseArr) {
     return new Promise((resolve, reject) => {
@@ -466,7 +447,8 @@ while (str = readline()) {
     break
 }
 
-//斐波那契额数列 0 1 1 2 3 5 8 13 21 34
+
+//斐波那契数列 0 1 1 2 3 5 8 13 21 34
 function fib(n) {
     if (n === 0) {
         return 0
@@ -513,7 +495,7 @@ class EventEmitter {
         });
     }
 
-    // 只订阅一次事件
+    // 只订阅一次事件，需要先将订阅的函数写入，再删除
     once(type, callBack) {
         function fn() {
             callBack();
@@ -551,11 +533,11 @@ event.once("dbClick", () => {
 
 
 // 模拟实现 setInterval
-var _setInterval = function () {
+var _setInterval = function (timeout) {
     var timer = setTimeout(() => {
         clearTimeout(timer)
         _setInterval()
-    }, 1000)
+    }, timeout)
 }
 _setInterval()
 
@@ -628,6 +610,7 @@ class Scheduler {
     }
     add(promiseCreator) {}
 }
+
 const timeout = (time) => new Promise(resolve => {
     setTimeout(resolve, time)
 })
