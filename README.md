@@ -60,3 +60,7 @@
 
 ### 面试篇
 * [JS 初篇](https://github.com/lurenacm/againJS/issues/5)
+
+
+### 秋招面试
+[林一一的秋招面试](https://github.com/lurenacm/againJS/issues/27)
