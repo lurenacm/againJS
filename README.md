@@ -61,9 +61,9 @@
 ### 面试篇
 * [JS 初篇](https://github.com/lurenacm/againJS/issues/5)
 
-
 ## vue 原理篇
-* [关于 Vue 我们需要知道的原理]()
+* [关于 Vue 我们需要知道的原理](https://github.com/lurenacm/againJS/issues/28)
+* [何不 👍👍 | Vue 高频原理篇+详细解答之 二](https://github.com/lurenacm/againJS/issues/29)
 
 ### 秋招面试
 [林一一的秋招面试](https://github.com/lurenacm/againJS/issues/27)
