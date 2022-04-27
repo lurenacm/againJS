@@ -60,6 +60,9 @@
 
 ### 面试篇
 * [JS 初篇](https://github.com/lurenacm/againJS/issues/5)
+* [urll输入到显示的过程](https://segmentfault.com/a/1190000013662126)
+
+
 
 ## vue 原理篇
 * [关于 Vue 我们需要知道的原理](https://github.com/lurenacm/againJS/issues/28)
