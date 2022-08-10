@@ -65,6 +65,7 @@
 ## 场景类
 * [10条数据的返回，前端该怎么处理](https://github.com/lurenacm/againJS/issues/31)
 * [大文件上传实现](https://github.com/lurenacm/againJS/issues/32)
+* [微信扫码登录实现原理](https://github.com/lurenacm/againJS/issues/33)
 
 ## vue 原理篇
 * [关于 Vue 我们需要知道的原理](https://github.com/lurenacm/againJS/issues/28)
