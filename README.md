@@ -72,6 +72,7 @@
 ## vue 原理篇
 * [关于 Vue 我们需要知道的原理](https://github.com/lurenacm/againJS/issues/28)
 * [何不 👍👍 | Vue 高频原理篇+详细解答之 二](https://github.com/lurenacm/againJS/issues/29)
+* [vue diff算法](https://mp.weixin.qq.com/s/8M-pJdKjF6bx5ijtSFKIcw)
 
 ### 秋招面试
 [林一一的秋招面试](https://github.com/lurenacm/againJS/issues/27)
