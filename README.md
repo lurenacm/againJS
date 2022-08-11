@@ -64,9 +64,9 @@
 * [babel实现原理](https://github.com/lurenacm/againJS/issues/34)
 
 ## 场景类
-* [10条数据的返回，前端该怎么处理](https://github.com/lurenacm/againJS/issues/31)
+* [10w条数据的返回，前端该怎么处理](https://github.com/lurenacm/againJS/issues/31)
 * [大文件上传实现](https://github.com/lurenacm/againJS/issues/32)
-* [微信扫码登录实现原理](https://github.com/lurenacm/againJS/issues/33)
+* [微信扫码登录实现原理](https://github.com/lurenacm/againJS/issues/33) 
 * [小程序之间的通信方式]()
 
 ## vue 原理篇
@@ -75,3 +75,13 @@
 
 ### 秋招面试
 [林一一的秋招面试](https://github.com/lurenacm/againJS/issues/27)
+
+### 好文
+[大文件上传](https://juejin.cn/post/6844904046436843527)
+[10w条数据返回](https://juejin.cn/post/6844904184689475592#heading-3)
+[小程序技术原理分析](https://zhaomenghuan.js.org/blog/wechat-miniprogram-principle-analysis.html)
+[小程序跨端技术](https://juejin.cn/post/6881597846307635214)
+[taro开发](https://juejin.cn/post/6844903779154804744)
+[图片性能压缩](https://www.zoo.team/article/images-compress)
+[anoeflow](https://iwiki.woa.com/pages/viewpage.action?pageId=1980305807)
+[JSBridge原理](https://www.superwen.cn/archives/hybrid-and-jsbridge)
