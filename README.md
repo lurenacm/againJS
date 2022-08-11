@@ -87,3 +87,4 @@
 * [anoeflow](https://iwiki.woa.com/pages/viewpage.action?pageId=1980305807)
 * [JSBridge原理](https://www.superwen.cn/archives/hybrid-and-jsbridge)
 * [webView](https://juejin.cn/post/6932083257286590477)
+* [性能压缩](https://www.zoo.team/article/images-compress)
