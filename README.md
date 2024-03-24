@@ -74,6 +74,9 @@
 * [何不 👍👍 | Vue 高频原理篇+详细解答之 二](https://github.com/lurenacm/againJS/issues/29)
 * [vue diff算法](https://mp.weixin.qq.com/s/8M-pJdKjF6bx5ijtSFKIcw)
 
+## react
+* [关于react hook 的解析](https://github.com/lurenacm/againJS/issues/36)
+
 ### 秋招面试
 [林一一的秋招面试](https://github.com/lurenacm/againJS/issues/27)
 
